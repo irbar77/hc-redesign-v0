@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Header } from '@/components/header'
 import { SearchBlock, SearchTab } from '@/components/search-block'
 import { AgencyCard, CaregiverCard, JobCard } from '@/components/result-cards'
+import { SearchFilters, SortOrder, ViewMode } from '@/components/search-filters'
 import {
   ForCaregiversSection,
   ForAgenciesSection,
@@ -26,15 +27,32 @@ export default function Home() {
   } | null>(null)
   const [activeTab, setActiveTab] = useState<SearchTab>('agencies')
   const [hasSearched, setHasSearched] = useState(false)
+  const [currentZipCode, setCurrentZipCode] = useState('')
+  
+  // Filter states (design only, no functionality)
+  const [sortOrder, setSortOrder] = useState<SortOrder>('none')
+  const [hiringNow, setHiringNow] = useState(false)
+  const [selectedLanguages, setSelectedLanguages] = useState<string[]>([])
+  const [selectedBenefits, setSelectedBenefits] = useState<string[]>([])
+  const [viewMode, setViewMode] = useState<ViewMode>('card')
 
   const handleSearch = (zipCode: string, tab: SearchTab) => {
     setActiveTab(tab)
     setHasSearched(true)
+    setCurrentZipCode(zipCode)
     setSearchResults({
       agencies: searchByZipCode(mockAgencies, zipCode),
       caregivers: searchByZipCode(mockCaregivers, zipCode),
       jobs: searchByZipCode(mockJobs, zipCode),
     })
+  }
+  
+  const getCurrentResultCount = () => {
+    if (!searchResults) return 0
+    if (activeTab === 'agencies') return searchResults.agencies.length
+    if (activeTab === 'caregivers') return searchResults.caregivers.length
+    if (activeTab === 'jobs') return searchResults.jobs.length
+    return 0
   }
 
   const stats = [
@@ -82,12 +100,22 @@ export default function Home() {
             {/* Search Results */}
             {hasSearched && searchResults && (
               <div className="mt-10">
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-xl font-semibold text-foreground">
-                    {activeTab === 'agencies' && `${searchResults.agencies.length} Agencies Found`}
-                    {activeTab === 'caregivers' && `${searchResults.caregivers.length} Caregivers Found`}
-                    {activeTab === 'jobs' && `${searchResults.jobs.length} Jobs Found`}
-                  </h2>
+                {/* Filters and results info */}
+                <div className="mb-6">
+                  <SearchFilters
+                    resultCount={getCurrentResultCount()}
+                    zipCode={currentZipCode}
+                    sortOrder={sortOrder}
+                    onSortChange={setSortOrder}
+                    hiringNow={hiringNow}
+                    onHiringNowChange={setHiringNow}
+                    selectedLanguages={selectedLanguages}
+                    onLanguagesChange={setSelectedLanguages}
+                    selectedBenefits={selectedBenefits}
+                    onBenefitsChange={setSelectedBenefits}
+                    viewMode={viewMode}
+                    onViewModeChange={setViewMode}
+                  />
                 </div>
 
                 <div className="grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">

@@ -152,20 +152,10 @@ export function AgencyCard({ agency }: { agency: Agency }) {
         )}
       </CardContent>
 
-      {/* Footer with darker background */}
-      <div className={cn(
-        "flex items-center justify-between px-6 py-3 mt-auto",
-        isPremium 
-          ? "bg-primary/5 dark:bg-primary/10" 
-          : isVerified 
-            ? "bg-muted/50" 
-            : "bg-muted/30"
-      )}>
-        <span className={cn(
-          "text-xs font-medium",
-          isPremium ? "text-primary" : isVerified ? "text-muted-foreground" : "text-muted-foreground/70"
-        )}>
-          {isPremium ? "Premium Member" : isVerified ? "Verified Member" : "Basic Listing"}
+      {/* Footer - flush to bottom */}
+      <div className="flex items-center justify-between px-6 py-3 mt-auto bg-muted/40 dark:bg-muted/20">
+        <span className="text-[10px] font-semibold tracking-wider text-muted-foreground/60 uppercase">
+          {isPremium ? "PREMIUM MEMBER" : isVerified ? "VERIFIED MEMBER" : "BASIC LISTING"}
         </span>
         <Button 
           variant={isPremium ? "default" : "outline"} 

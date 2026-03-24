@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { ThemeToggle } from '@/components/theme-toggle'
+import { AuthModals } from '@/components/auth-modals'
 
 const languages = [
   { code: 'en', label: 'English' },
@@ -22,6 +23,18 @@ const languages = [
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [currentLanguage, setCurrentLanguage] = useState('en')
+  const [authModalOpen, setAuthModalOpen] = useState(false)
+  const [authMode, setAuthMode] = useState<'login' | 'signup'>('login')
+
+  const openLogin = () => {
+    setAuthMode('login')
+    setAuthModalOpen(true)
+  }
+
+  const openSignup = () => {
+    setAuthMode('signup')
+    setAuthModalOpen(true)
+  }
 
   return (
     <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border">

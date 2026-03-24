@@ -6,13 +6,133 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import type { Agency, Caregiver, Job } from '@/lib/mock-data'
+import type { ViewMode } from '@/components/search-filters'
 import { cn } from '@/lib/utils'
 
-export function AgencyCard({ agency }: { agency: Agency }) {
+interface AgencyCardProps {
+  agency: Agency
+  viewMode?: ViewMode
+}
+
+export function AgencyCard({ agency, viewMode = 'card' }: AgencyCardProps) {
   const isPremium = agency.tier === 'premium'
   const isVerified = agency.tier === 'verified'
   const isFree = agency.tier === 'free'
+  const isListView = viewMode === 'list'
 
+  // List view layout
+  if (isListView) {
+    return (
+      <Card 
+        className={cn(
+          "transition-all duration-200 bg-card relative overflow-hidden",
+          isPremium && "ring-1 ring-primary/30 shadow-md hover:shadow-lg",
+          isVerified && "ring-1 ring-primary/20 hover:shadow-md",
+          isFree && "hover:shadow-sm"
+        )}
+      >
+        <div className="flex flex-col sm:flex-row">
+          {/* Main content */}
+          <div className="flex-1 p-4 sm:p-5">
+            <div className="flex flex-col sm:flex-row sm:items-start gap-4">
+              {/* Left: Name, location, badges */}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 flex-wrap">
+                  {agency.hiring && (
+                    <Badge className="text-xs bg-emerald-50 text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-950/50 dark:text-emerald-400">
+                      Hiring Now
+                    </Badge>
+                  )}
+                </div>
+                <div className="flex items-center gap-2 mt-1">
+                  <h3 className="font-semibold text-card-foreground text-base sm:text-lg truncate">
+                    {agency.name}
+                  </h3>
+                  {(isPremium || isVerified) && (
+                    <BadgeCheck className="h-5 w-5 shrink-0 text-primary" />
+                  )}
+                  <div className="flex items-center gap-1 px-2 py-0.5 rounded-md shrink-0 bg-muted ml-auto sm:ml-2">
+                    <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
+                    <span className="font-medium text-sm">{agency.rating}</span>
+                    <span className="text-xs text-muted-foreground">({agency.reviewCount})</span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4 mt-1 text-sm text-muted-foreground">
+                  <span className="flex items-center gap-1">
+                    <MapPin className="h-4 w-4 shrink-0" />
+                    {agency.location}
+                  </span>
+                  {isPremium && agency.yearsInBusiness && (
+                    <span className="flex items-center gap-1">
+                      <Award className="h-3.5 w-3.5 text-primary" />
+                      {agency.yearsInBusiness} years
+                    </span>
+                  )}
+                  {isPremium && agency.staffCount && (
+                    <span className="flex items-center gap-1">
+                      <Users className="h-3.5 w-3.5 text-primary" />
+                      {agency.staffCount}+ staff
+                    </span>
+                  )}
+                  {isVerified && agency.yearsInBusiness && (
+                    <span className="flex items-center gap-1">
+                      <Award className="h-3.5 w-3.5 text-primary" />
+                      {agency.yearsInBusiness} years
+                    </span>
+                  )}
+                </div>
+                
+                <p className="text-sm text-muted-foreground mt-2 line-clamp-1">
+                  {agency.description}
+                </p>
+
+                {/* Services and benefits in one row */}
+                <div className="flex flex-wrap items-center gap-1.5 mt-3">
+                  {agency.services.slice(0, 3).map((service) => (
+                    <Badge 
+                      key={service} 
+                      variant="secondary" 
+                      className="text-xs bg-muted text-muted-foreground hover:bg-muted/80"
+                    >
+                      {service}
+                    </Badge>
+                  ))}
+                  {agency.services.length > 3 && (
+                    <Badge variant="outline" className="text-xs text-muted-foreground">
+                      +{agency.services.length - 3}
+                    </Badge>
+                  )}
+                  {isPremium && agency.benefits && agency.benefits.slice(0, 2).map((benefit) => (
+                    <span 
+                      key={benefit} 
+                      className="text-xs text-sky-700 bg-sky-50 px-2 py-0.5 rounded-full dark:text-sky-300 dark:bg-sky-950/50"
+                    >
+                      {benefit}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right: Footer area */}
+          <div className="flex sm:flex-col items-center justify-between sm:justify-center gap-3 px-4 py-3 sm:px-5 sm:py-4 bg-muted/40 dark:bg-muted/20 sm:w-40">
+            <span className="text-[10px] font-semibold tracking-wider text-muted-foreground/60 uppercase">
+              {isPremium ? "PREMIUM" : isVerified ? "VERIFIED" : "BASIC"}
+            </span>
+            <Button 
+              variant={isPremium ? "default" : "outline"} 
+              size="sm"
+            >
+              View Profile
+            </Button>
+          </div>
+        </div>
+      </Card>
+    )
+  }
+
+  // Card view layout (default)
   return (
     <Card 
       className={cn(

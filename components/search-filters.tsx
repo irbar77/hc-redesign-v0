@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ArrowDownAZ, ArrowUpZA, Briefcase, Globe, Gift, LayoutGrid, MapIcon, ChevronDown } from 'lucide-react'
+import { ArrowDownAZ, ArrowUpZA, Briefcase, Globe, Gift, LayoutGrid, MapIcon, List, ChevronDown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import {
@@ -44,7 +44,7 @@ const BENEFITS = [
 ]
 
 export type SortOrder = 'a-z' | 'z-a' | 'none'
-export type ViewMode = 'card' | 'map'
+export type ViewMode = 'card' | 'list' | 'map'
 
 interface SearchFiltersProps {
   resultCount: number
@@ -105,20 +105,41 @@ export function SearchFilters({
         </div>
 
         {/* View mode toggle */}
-        <div className="flex items-center gap-1 bg-muted rounded-lg p-1">
+        <div className="flex items-center gap-0.5 bg-muted rounded-lg p-1">
           <Button
-            variant={viewMode === 'card' ? 'secondary' : 'ghost'}
+            variant="ghost"
             size="sm"
-            className="h-8 px-3 gap-1.5"
+            className={`h-8 px-3 gap-1.5 transition-colors ${
+              viewMode === 'card' 
+                ? 'bg-background text-foreground shadow-sm' 
+                : 'text-muted-foreground hover:text-foreground'
+            }`}
             onClick={() => onViewModeChange('card')}
           >
             <LayoutGrid className="h-4 w-4" />
             <span className="hidden sm:inline text-sm">Card</span>
           </Button>
           <Button
-            variant={viewMode === 'map' ? 'secondary' : 'ghost'}
+            variant="ghost"
             size="sm"
-            className="h-8 px-3 gap-1.5"
+            className={`h-8 px-3 gap-1.5 transition-colors ${
+              viewMode === 'list' 
+                ? 'bg-background text-foreground shadow-sm' 
+                : 'text-muted-foreground hover:text-foreground'
+            }`}
+            onClick={() => onViewModeChange('list')}
+          >
+            <List className="h-4 w-4" />
+            <span className="hidden sm:inline text-sm">List</span>
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            className={`h-8 px-3 gap-1.5 transition-colors ${
+              viewMode === 'map' 
+                ? 'bg-background text-foreground shadow-sm' 
+                : 'text-muted-foreground hover:text-foreground'
+            }`}
             onClick={() => onViewModeChange('map')}
           >
             <MapIcon className="h-4 w-4" />

@@ -118,10 +118,14 @@ export default function Home() {
                   />
                 </div>
 
-                <div className="grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+                <div className={
+                  viewMode === 'list' 
+                    ? "flex flex-col gap-3" 
+                    : "grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
+                }>
                   {activeTab === 'agencies' &&
                     searchResults.agencies.map((agency) => (
-                      <AgencyCard key={agency.id} agency={agency} />
+                      <AgencyCard key={agency.id} agency={agency} viewMode={viewMode} />
                     ))}
                   {activeTab === 'caregivers' &&
                     searchResults.caregivers.map((caregiver) => (

@@ -17,7 +17,7 @@ export function AgencyCard({ agency }: { agency: Agency }) {
     <Card 
       className={cn(
         "transition-all duration-200 bg-card relative overflow-hidden",
-        isPremium && "ring-1 ring-amber-200 shadow-md hover:shadow-lg",
+        isPremium && "ring-1 ring-primary/30 shadow-md hover:shadow-lg",
         isVerified && "ring-1 ring-primary/20 hover:shadow-md",
         isFree && "hover:shadow-sm"
       )}
@@ -25,8 +25,8 @@ export function AgencyCard({ agency }: { agency: Agency }) {
       {/* Premium badge indicator */}
       {isPremium && (
         <div className="absolute top-0 right-0">
-          <div className="bg-gradient-to-l from-amber-100 to-transparent px-3 py-1">
-            <span className="text-xs font-medium text-amber-700 flex items-center gap-1">
+          <div className="bg-gradient-to-l from-primary/10 to-transparent px-3 py-1">
+            <span className="text-xs font-medium text-primary flex items-center gap-1">
               <Award className="h-3 w-3" />
               Featured
             </span>
@@ -45,10 +45,7 @@ export function AgencyCard({ agency }: { agency: Agency }) {
                 {agency.name}
               </h3>
               {(isPremium || isVerified) && (
-                <BadgeCheck className={cn(
-                  "h-5 w-5 shrink-0",
-                  isPremium ? "text-amber-500" : "text-primary"
-                )} />
+                <BadgeCheck className="h-5 w-5 shrink-0 text-primary" />
               )}
             </div>
             <div className="flex items-center gap-1 text-sm text-muted-foreground mt-1">
@@ -56,14 +53,8 @@ export function AgencyCard({ agency }: { agency: Agency }) {
               <span className="truncate">{agency.location}</span>
             </div>
           </div>
-          <div className={cn(
-            "flex items-center gap-1 px-2 py-1 rounded-md shrink-0",
-            isPremium ? "bg-amber-50" : "bg-muted"
-          )}>
-            <Star className={cn(
-              "h-4 w-4",
-              isPremium ? "fill-amber-400 text-amber-400" : "fill-yellow-400 text-yellow-400"
-            )} />
+          <div className="flex items-center gap-1 px-2 py-1 rounded-md shrink-0 bg-muted">
+            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
             <span className="font-medium text-sm">{agency.rating}</span>
             <span className="text-xs text-muted-foreground">({agency.reviewCount})</span>
           </div>
@@ -74,19 +65,19 @@ export function AgencyCard({ agency }: { agency: Agency }) {
           <div className="flex items-center gap-4 mt-3 text-xs text-muted-foreground">
             {agency.yearsInBusiness && (
               <span className="flex items-center gap-1">
-                <Award className="h-3.5 w-3.5 text-amber-500" />
+                <Award className="h-3.5 w-3.5 text-primary" />
                 {agency.yearsInBusiness} years
               </span>
             )}
             {agency.staffCount && (
               <span className="flex items-center gap-1">
-                <Users className="h-3.5 w-3.5 text-amber-500" />
+                <Users className="h-3.5 w-3.5 text-primary" />
                 {agency.staffCount}+ staff
               </span>
             )}
             {agency.responseTime && (
               <span className="flex items-center gap-1">
-                <Zap className="h-3.5 w-3.5 text-amber-500" />
+                <Zap className="h-3.5 w-3.5 text-yellow-500" />
                 Fast response
               </span>
             )}
@@ -118,7 +109,7 @@ export function AgencyCard({ agency }: { agency: Agency }) {
               variant="secondary" 
               className={cn(
                 "text-xs",
-                isPremium && "bg-amber-50 text-amber-800 hover:bg-amber-100"
+                isPremium && "bg-primary/10 text-primary hover:bg-primary/15"
               )}
             >
               {service}
@@ -153,7 +144,7 @@ export function AgencyCard({ agency }: { agency: Agency }) {
             {agency.benefits.slice(0, 3).map((benefit) => (
               <span 
                 key={benefit} 
-                className="text-xs text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full"
+                className="text-xs text-primary bg-primary/10 px-2 py-0.5 rounded-full"
               >
                 {benefit}
               </span>
@@ -169,16 +160,11 @@ export function AgencyCard({ agency }: { agency: Agency }) {
         {/* Footer */}
         <div className={cn(
           "flex items-center justify-between pt-2",
-          isPremium && "border-t border-amber-100"
+          isPremium && "border-t border-primary/10"
         )}>
           <div className="flex items-center gap-2">
             {agency.hiring && (
-              <Badge className={cn(
-                "text-xs",
-                isPremium 
-                  ? "bg-green-100 text-green-800 hover:bg-green-100" 
-                  : "bg-green-50 text-green-700 hover:bg-green-50"
-              )}>
+              <Badge className="text-xs bg-green-50 text-green-700 hover:bg-green-50">
                 Hiring Now
               </Badge>
             )}
@@ -186,9 +172,6 @@ export function AgencyCard({ agency }: { agency: Agency }) {
           <Button 
             variant={isPremium ? "default" : "outline"} 
             size="sm"
-            className={cn(
-              isPremium && "bg-amber-600 hover:bg-amber-700 text-white"
-            )}
           >
             View Profile
           </Button>

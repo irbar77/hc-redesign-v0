@@ -3,7 +3,9 @@
 import { useState } from 'react'
 import { Header } from '@/components/header'
 import { SearchBlock, SearchTab } from '@/components/search-block'
-import { AgencyCard, CaregiverCard, JobCard } from '@/components/result-cards'
+import { CaregiverCard, JobCard } from '@/components/result-cards'
+import { AgencyCard, AgencyCardListView } from '@/components/agency-cards'
+import { SearchFilters, ViewMode, SortOption } from '@/components/search-filters'
 import {
   ForCaregiversSection,
   ForAgenciesSection,
@@ -26,6 +28,13 @@ export default function Home() {
   } | null>(null)
   const [activeTab, setActiveTab] = useState<SearchTab>('agencies')
   const [hasSearched, setHasSearched] = useState(false)
+  const [viewMode, setViewMode] = useState<ViewMode>('grid')
+  const [sortBy, setSortBy] = useState<SortOption>('rating')
+  const [filters, setFilters] = useState({
+    verified: false,
+    hiring: false,
+    premium: false,
+  })
 
   const handleSearch = (zipCode: string, tab: SearchTab) => {
     setActiveTab(tab)
@@ -82,35 +91,107 @@ export default function Home() {
             {/* Search Results */}
             {hasSearched && searchResults && (
               <div className="mt-10">
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-xl font-semibold text-foreground">
-                    {activeTab === 'agencies' && `${searchResults.agencies.length} Agencies Found`}
-                    {activeTab === 'caregivers' && `${searchResults.caregivers.length} Caregivers Found`}
-                    {activeTab === 'jobs' && `${searchResults.jobs.length} Jobs Found`}
-                  </h2>
-                </div>
+                {/* Filters bar */}
+                {activeTab === 'agencies' && (
+                  <SearchFilters
+                    viewMode={viewMode}
+                    onViewModeChange={setViewMode}
+                    sortBy={sortBy}
+                    onSortChange={setSortBy}
+                    filters={filters}
+                    onFiltersChange={setFilters}
+                    resultCount={
+                      searchResults.agencies
+                        .filter((a) => !filters.verified || a.verified)
+                        .filter((a) => !filters.hiring || a.hiring)
+                        .filter((a) => !filters.premium || a.tier === 'premium').length
+                    }
+                    resultType="agencies"
+                  />
+                )}
 
-                <div className="grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-                  {activeTab === 'agencies' &&
-                    searchResults.agencies.map((agency) => (
-                      <AgencyCard key={agency.id} agency={agency} />
-                    ))}
-                  {activeTab === 'caregivers' &&
-                    searchResults.caregivers.map((caregiver) => (
+                {activeTab !== 'agencies' && (
+                  <div className="flex items-center justify-between mb-6">
+                    <h2 className="text-xl font-semibold text-foreground">
+                      {activeTab === 'caregivers' && `${searchResults.caregivers.length} Caregivers Found`}
+                      {activeTab === 'jobs' && `${searchResults.jobs.length} Jobs Found`}
+                    </h2>
+                  </div>
+                )}
+
+                {/* Agency results with different views */}
+                {activeTab === 'agencies' && (
+                  <>
+                    {viewMode === 'map' ? (
+                      <div className="mt-6 bg-muted rounded-xl border border-border h-96 flex items-center justify-center">
+                        <div className="text-center text-muted-foreground">
+                          <p className="text-lg font-medium">Map View</p>
+                          <p className="text-sm">Interactive map coming soon</p>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className={`mt-6 ${
+                        viewMode === 'grid' 
+                          ? 'grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3' 
+                          : 'flex flex-col gap-4'
+                      }`}>
+                        {searchResults.agencies
+                          .filter((a) => !filters.verified || a.verified)
+                          .filter((a) => !filters.hiring || a.hiring)
+                          .filter((a) => !filters.premium || a.tier === 'premium')
+                          .sort((a, b) => {
+                            switch (sortBy) {
+                              case 'rating':
+                                return b.rating - a.rating
+                              case 'reviews':
+                                return b.reviewCount - a.reviewCount
+                              case 'name':
+                                return a.name.localeCompare(b.name)
+                              default:
+                                return 0
+                            }
+                          })
+                          .map((agency) =>
+                            viewMode === 'list' ? (
+                              <AgencyCardListView key={agency.id} agency={agency} />
+                            ) : (
+                              <AgencyCard key={agency.id} agency={agency} />
+                            )
+                          )}
+                      </div>
+                    )}
+                  </>
+                )}
+
+                {/* Caregiver results */}
+                {activeTab === 'caregivers' && (
+                  <div className="grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+                    {searchResults.caregivers.map((caregiver) => (
                       <CaregiverCard key={caregiver.id} caregiver={caregiver} />
                     ))}
-                  {activeTab === 'jobs' &&
-                    searchResults.jobs.map((job) => (
+                  </div>
+                )}
+
+                {/* Job results */}
+                {activeTab === 'jobs' && (
+                  <div className="grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+                    {searchResults.jobs.map((job) => (
                       <JobCard key={job.id} job={job} />
                     ))}
-                </div>
+                  </div>
+                )}
 
-                {((activeTab === 'agencies' && searchResults.agencies.length === 0) ||
+                {/* No results message */}
+                {((activeTab === 'agencies' && 
+                  searchResults.agencies
+                    .filter((a) => !filters.verified || a.verified)
+                    .filter((a) => !filters.hiring || a.hiring)
+                    .filter((a) => !filters.premium || a.tier === 'premium').length === 0) ||
                   (activeTab === 'caregivers' && searchResults.caregivers.length === 0) ||
                   (activeTab === 'jobs' && searchResults.jobs.length === 0)) && (
-                  <div className="text-center py-12 bg-card rounded-xl border border-border">
+                  <div className="text-center py-12 bg-card rounded-xl border border-border mt-6">
                     <p className="text-muted-foreground">
-                      No results found for this ZIP code. Try a different search.
+                      No results found. Try adjusting your filters or search criteria.
                     </p>
                   </div>
                 )}

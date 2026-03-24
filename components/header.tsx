@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Bell, Menu, X, User } from 'lucide-react'
+import { Bell, Menu, X, User, MessageCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { AuthModal } from '@/components/auth-modal'
+import { LanguageSwitcher } from '@/components/language-switcher'
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -55,7 +56,16 @@ export function Header() {
           </nav>
 
           {/* Right Side Actions */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 sm:gap-2">
+            {/* Messages */}
+            <Button variant="ghost" size="icon" className="relative">
+              <MessageCircle className="h-5 w-5" />
+              <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-primary text-[10px] font-medium text-primary-foreground flex items-center justify-center">
+                2
+              </span>
+              <span className="sr-only">Messages</span>
+            </Button>
+
             {/* Notifications */}
             <Button variant="ghost" size="icon" className="relative">
               <Bell className="h-5 w-5" />
@@ -64,6 +74,9 @@ export function Header() {
               </span>
               <span className="sr-only">Notifications</span>
             </Button>
+
+            {/* Language Switcher */}
+            <LanguageSwitcher />
 
             {/* Theme Toggle */}
             <ThemeToggle />

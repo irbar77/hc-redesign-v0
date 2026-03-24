@@ -1,3 +1,5 @@
+export type AgencyTier = 'free' | 'basic' | 'premium'
+
 export interface Agency {
   id: string
   name: string
@@ -9,6 +11,11 @@ export interface Agency {
   description: string
   verified: boolean
   hiring: boolean
+  tier: AgencyTier
+  logo?: string
+  phone?: string
+  website?: string
+  featured?: boolean
 }
 
 export interface Caregiver {
@@ -47,9 +54,13 @@ export const mockAgencies: Agency[] = [
     rating: 4.8,
     reviewCount: 124,
     services: ['Personal Care', 'Companionship', 'Medication Management'],
-    description: 'Providing compassionate home care services for over 15 years.',
+    description: 'Providing compassionate home care services for over 15 years. Our team of certified caregivers is dedicated to delivering personalized care.',
     verified: true,
     hiring: true,
+    tier: 'premium',
+    phone: '(718) 555-0123',
+    website: 'sunrisehomecare.com',
+    featured: true,
   },
   {
     id: '2',
@@ -62,6 +73,8 @@ export const mockAgencies: Agency[] = [
     description: 'Licensed agency specializing in skilled nursing and rehabilitation.',
     verified: true,
     hiring: false,
+    tier: 'basic',
+    phone: '(212) 555-0456',
   },
   {
     id: '3',
@@ -70,10 +83,14 @@ export const mockAgencies: Agency[] = [
     zipCode: '11375',
     rating: 4.9,
     reviewCount: 156,
-    services: ['Dementia Care', 'Respite Care', 'Live-in Care'],
-    description: 'Expert care for seniors with memory conditions.',
+    services: ['Dementia Care', 'Respite Care', 'Live-in Care', 'Alzheimers Care', '24/7 Support'],
+    description: 'Expert care for seniors with memory conditions. Award-winning dementia care specialists with over 20 years of experience.',
     verified: true,
     hiring: true,
+    tier: 'premium',
+    phone: '(718) 555-0789',
+    website: 'goldenyearscare.com',
+    featured: true,
   },
   {
     id: '4',
@@ -86,6 +103,7 @@ export const mockAgencies: Agency[] = [
     description: 'Affordable and reliable home care services.',
     verified: false,
     hiring: true,
+    tier: 'free',
   },
   {
     id: '5',
@@ -98,6 +116,8 @@ export const mockAgencies: Agency[] = [
     description: 'Specializing in post-surgical recovery and rehabilitation support.',
     verified: true,
     hiring: true,
+    tier: 'basic',
+    phone: '(718) 555-0234',
   },
   {
     id: '6',
@@ -110,6 +130,7 @@ export const mockAgencies: Agency[] = [
     description: 'Providing friendly and reliable support for seniors in Brooklyn Heights.',
     verified: true,
     hiring: false,
+    tier: 'free',
   },
   {
     id: '7',
@@ -118,10 +139,14 @@ export const mockAgencies: Agency[] = [
     zipCode: '11201',
     rating: 4.9,
     reviewCount: 118,
-    services: ['Dementia Care', '24/7 Monitoring'],
-    description: 'High-quality care specifically tailored for patients with memory loss.',
+    services: ['Dementia Care', '24/7 Monitoring', 'Live-in Care', 'Respite Care'],
+    description: 'High-quality care specifically tailored for patients with memory loss. Our compassionate team provides round-the-clock support.',
     verified: true,
     hiring: true,
+    tier: 'premium',
+    phone: '(718) 555-0567',
+    website: 'parkslopecaregivers.com',
+    featured: true,
   },
   {
     id: '8',
@@ -134,6 +159,8 @@ export const mockAgencies: Agency[] = [
     description: 'Professional medical home care provided by registered nurses.',
     verified: false,
     hiring: true,
+    tier: 'basic',
+    phone: '(718) 555-0890',
   },
   {
     id: '9',
@@ -146,6 +173,7 @@ export const mockAgencies: Agency[] = [
     description: 'Local care services from neighbors you can trust.',
     verified: true,
     hiring: true,
+    tier: 'free',
   },
 ]
 

@@ -11,9 +11,12 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { ThemeToggle } from '@/components/theme-toggle'
+import { AuthModal } from '@/components/auth-modal'
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [authModalOpen, setAuthModalOpen] = useState(false)
+  const [authModalMode, setAuthModalMode] = useState<'login' | 'signup'>('login')
 
   return (
     <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border">
@@ -67,10 +70,25 @@ export function Header() {
 
             {/* User Menu / Auth Buttons */}
             <div className="hidden sm:flex items-center gap-2">
-              <Button variant="ghost" size="sm">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  setAuthModalMode('login')
+                  setAuthModalOpen(true)
+                }}
+              >
                 Log in
               </Button>
-              <Button size="sm">Sign up</Button>
+              <Button
+                size="sm"
+                onClick={() => {
+                  setAuthModalMode('signup')
+                  setAuthModalOpen(true)
+                }}
+              >
+                Sign up
+              </Button>
             </div>
 
             {/* Mobile Menu Button */}
@@ -89,6 +107,13 @@ export function Header() {
             </Button>
           </div>
         </div>
+
+        {/* Auth Modal */}
+        <AuthModal
+          open={authModalOpen}
+          onOpenChange={setAuthModalOpen}
+          initialMode={authModalMode}
+        />
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
@@ -116,10 +141,27 @@ export function Header() {
                 For Families
               </Link>
               <div className="flex gap-2 px-3 pt-2 sm:hidden">
-                <Button variant="ghost" size="sm" className="flex-1">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="flex-1"
+                  onClick={() => {
+                    setAuthModalMode('login')
+                    setAuthModalOpen(true)
+                    setMobileMenuOpen(false)
+                  }}
+                >
                   Log in
                 </Button>
-                <Button size="sm" className="flex-1">
+                <Button
+                  size="sm"
+                  className="flex-1"
+                  onClick={() => {
+                    setAuthModalMode('signup')
+                    setAuthModalOpen(true)
+                    setMobileMenuOpen(false)
+                  }}
+                >
                   Sign up
                 </Button>
               </div>

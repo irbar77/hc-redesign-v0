@@ -1,3 +1,5 @@
+export type AgencyTier = 'free' | 'verified' | 'premium'
+
 export interface Agency {
   id: string
   name: string
@@ -9,6 +11,12 @@ export interface Agency {
   description: string
   verified: boolean
   hiring: boolean
+  tier: AgencyTier
+  yearsInBusiness?: number
+  languages?: string[]
+  benefits?: string[]
+  responseTime?: string
+  staffCount?: number
 }
 
 export interface Caregiver {
@@ -39,6 +47,7 @@ export interface Job {
 }
 
 export const mockAgencies: Agency[] = [
+  // Premium tier agency
   {
     id: '1',
     name: 'Sunrise Home Care',
@@ -46,11 +55,18 @@ export const mockAgencies: Agency[] = [
     zipCode: '11201',
     rating: 4.8,
     reviewCount: 124,
-    services: ['Personal Care', 'Companionship', 'Medication Management'],
-    description: 'Providing compassionate home care services for over 15 years.',
+    services: ['Personal Care', 'Companionship', 'Medication Management', 'Skilled Nursing'],
+    description: 'Providing compassionate home care services for over 15 years. Our dedicated team of certified professionals ensures the highest quality of care for your loved ones.',
     verified: true,
     hiring: true,
+    tier: 'premium',
+    yearsInBusiness: 15,
+    languages: ['English', 'Spanish', 'Russian'],
+    benefits: ['Health Insurance', '401(k)', 'Paid Time Off', 'Training Programs'],
+    responseTime: 'Usually responds within 1 hour',
+    staffCount: 150,
   },
+  // Verified tier agency
   {
     id: '2',
     name: 'CareFirst Agency',
@@ -62,7 +78,11 @@ export const mockAgencies: Agency[] = [
     description: 'Licensed agency specializing in skilled nursing and rehabilitation.',
     verified: true,
     hiring: false,
+    tier: 'verified',
+    yearsInBusiness: 8,
+    languages: ['English', 'Spanish'],
   },
+  // Premium tier agency
   {
     id: '3',
     name: 'Golden Years Care',
@@ -70,11 +90,18 @@ export const mockAgencies: Agency[] = [
     zipCode: '11375',
     rating: 4.9,
     reviewCount: 156,
-    services: ['Dementia Care', 'Respite Care', 'Live-in Care'],
-    description: 'Expert care for seniors with memory conditions.',
+    services: ['Dementia Care', 'Respite Care', 'Live-in Care', 'Memory Support'],
+    description: 'Expert care for seniors with memory conditions. Award-winning dementia care specialists with compassionate and highly trained staff.',
     verified: true,
     hiring: true,
+    tier: 'premium',
+    yearsInBusiness: 12,
+    languages: ['English', 'Chinese', 'Korean'],
+    benefits: ['Health Insurance', 'Dental', 'Vision', 'Paid Time Off'],
+    responseTime: 'Usually responds within 30 minutes',
+    staffCount: 200,
   },
+  // Free tier agency
   {
     id: '4',
     name: 'Helping Hands NYC',
@@ -86,7 +113,9 @@ export const mockAgencies: Agency[] = [
     description: 'Affordable and reliable home care services.',
     verified: false,
     hiring: true,
+    tier: 'free',
   },
+  // Verified tier agency
   {
     id: '5',
     name: 'Brooklyn Bridge Home Care',
@@ -94,11 +123,15 @@ export const mockAgencies: Agency[] = [
     zipCode: '11201',
     rating: 4.7,
     reviewCount: 92,
-    services: ['Post-Op Care', 'Mobility Assistance'],
+    services: ['Post-Op Care', 'Mobility Assistance', 'Physical Therapy'],
     description: 'Specializing in post-surgical recovery and rehabilitation support.',
     verified: true,
     hiring: true,
+    tier: 'verified',
+    yearsInBusiness: 6,
+    languages: ['English', 'Polish', 'Russian'],
   },
+  // Free tier agency
   {
     id: '6',
     name: 'Heights Health Services',
@@ -108,9 +141,11 @@ export const mockAgencies: Agency[] = [
     reviewCount: 45,
     services: ['Senior Companionship', 'Light Housekeeping'],
     description: 'Providing friendly and reliable support for seniors in Brooklyn Heights.',
-    verified: true,
+    verified: false,
     hiring: false,
+    tier: 'free',
   },
+  // Premium tier agency
   {
     id: '7',
     name: 'Park Slope Caregivers',
@@ -118,11 +153,18 @@ export const mockAgencies: Agency[] = [
     zipCode: '11201',
     rating: 4.9,
     reviewCount: 118,
-    services: ['Dementia Care', '24/7 Monitoring'],
-    description: 'High-quality care specifically tailored for patients with memory loss.',
+    services: ['Dementia Care', '24/7 Monitoring', 'Specialized Memory Care'],
+    description: 'High-quality care specifically tailored for patients with memory loss. Our certified dementia care specialists provide round-the-clock monitoring and support.',
     verified: true,
     hiring: true,
+    tier: 'premium',
+    yearsInBusiness: 10,
+    languages: ['English', 'Spanish', 'French', 'Creole'],
+    benefits: ['Health Insurance', '401(k)', 'Signing Bonus', 'Career Development'],
+    responseTime: 'Usually responds within 1 hour',
+    staffCount: 85,
   },
+  // Free tier agency
   {
     id: '8',
     name: 'Elite Home Assistance',
@@ -134,7 +176,9 @@ export const mockAgencies: Agency[] = [
     description: 'Professional medical home care provided by registered nurses.',
     verified: false,
     hiring: true,
+    tier: 'free',
   },
+  // Verified tier agency
   {
     id: '9',
     name: 'Brooklyn Heights Care',
@@ -142,10 +186,13 @@ export const mockAgencies: Agency[] = [
     zipCode: '11201',
     rating: 4.5,
     reviewCount: 38,
-    services: ['Companionship', 'Meal Prep'],
+    services: ['Companionship', 'Meal Prep', 'Transportation'],
     description: 'Local care services from neighbors you can trust.',
     verified: true,
     hiring: true,
+    tier: 'verified',
+    yearsInBusiness: 4,
+    languages: ['English', 'Hebrew'],
   },
 ]
 

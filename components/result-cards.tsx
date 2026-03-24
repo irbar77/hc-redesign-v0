@@ -1,52 +1,195 @@
 'use client'
 
-import { MapPin, Star, BadgeCheck, Clock, DollarSign } from 'lucide-react'
+import { MapPin, Star, BadgeCheck, Clock, DollarSign, Users, Globe, Award, Zap } from 'lucide-react'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import type { Agency, Caregiver, Job } from '@/lib/mock-data'
+import { cn } from '@/lib/utils'
 
 export function AgencyCard({ agency }: { agency: Agency }) {
+  const isPremium = agency.tier === 'premium'
+  const isVerified = agency.tier === 'verified'
+  const isFree = agency.tier === 'free'
+
   return (
-    <Card className="hover:shadow-md transition-shadow bg-card">
-      <CardHeader className="pb-3">
+    <Card 
+      className={cn(
+        "transition-all duration-200 bg-card relative overflow-hidden",
+        isPremium && "ring-1 ring-amber-200 shadow-md hover:shadow-lg",
+        isVerified && "ring-1 ring-primary/20 hover:shadow-md",
+        isFree && "hover:shadow-sm"
+      )}
+    >
+      {/* Premium badge indicator */}
+      {isPremium && (
+        <div className="absolute top-0 right-0">
+          <div className="bg-gradient-to-l from-amber-100 to-transparent px-3 py-1">
+            <span className="text-xs font-medium text-amber-700 flex items-center gap-1">
+              <Award className="h-3 w-3" />
+              Featured
+            </span>
+          </div>
+        </div>
+      )}
+
+      <CardHeader className={cn("pb-3", isPremium && "pt-6")}>
         <div className="flex items-start justify-between">
-          <div>
+          <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
-              <h3 className="font-semibold text-lg text-card-foreground">{agency.name}</h3>
-              {agency.verified && (
-                <BadgeCheck className="h-5 w-5 text-primary" />
+              <h3 className={cn(
+                "font-semibold text-card-foreground truncate",
+                isPremium ? "text-lg" : "text-base"
+              )}>
+                {agency.name}
+              </h3>
+              {(isPremium || isVerified) && (
+                <BadgeCheck className={cn(
+                  "h-5 w-5 shrink-0",
+                  isPremium ? "text-amber-500" : "text-primary"
+                )} />
               )}
             </div>
             <div className="flex items-center gap-1 text-sm text-muted-foreground mt-1">
-              <MapPin className="h-4 w-4" />
-              {agency.location}
+              <MapPin className="h-4 w-4 shrink-0" />
+              <span className="truncate">{agency.location}</span>
             </div>
           </div>
-          <div className="flex items-center gap-1 bg-muted px-2 py-1 rounded-md">
-            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+          <div className={cn(
+            "flex items-center gap-1 px-2 py-1 rounded-md shrink-0",
+            isPremium ? "bg-amber-50" : "bg-muted"
+          )}>
+            <Star className={cn(
+              "h-4 w-4",
+              isPremium ? "fill-amber-400 text-amber-400" : "fill-yellow-400 text-yellow-400"
+            )} />
             <span className="font-medium text-sm">{agency.rating}</span>
             <span className="text-xs text-muted-foreground">({agency.reviewCount})</span>
           </div>
         </div>
+
+        {/* Premium: Extra info row */}
+        {isPremium && (
+          <div className="flex items-center gap-4 mt-3 text-xs text-muted-foreground">
+            {agency.yearsInBusiness && (
+              <span className="flex items-center gap-1">
+                <Award className="h-3.5 w-3.5 text-amber-500" />
+                {agency.yearsInBusiness} years
+              </span>
+            )}
+            {agency.staffCount && (
+              <span className="flex items-center gap-1">
+                <Users className="h-3.5 w-3.5 text-amber-500" />
+                {agency.staffCount}+ staff
+              </span>
+            )}
+            {agency.responseTime && (
+              <span className="flex items-center gap-1">
+                <Zap className="h-3.5 w-3.5 text-amber-500" />
+                Fast response
+              </span>
+            )}
+          </div>
+        )}
+
+        {/* Verified: Years in business */}
+        {isVerified && agency.yearsInBusiness && (
+          <div className="flex items-center gap-1 mt-2 text-xs text-muted-foreground">
+            <Award className="h-3.5 w-3.5 text-primary" />
+            {agency.yearsInBusiness} years in business
+          </div>
+        )}
       </CardHeader>
+
       <CardContent className="space-y-3">
-        <p className="text-sm text-muted-foreground">{agency.description}</p>
+        <p className={cn(
+          "text-sm text-muted-foreground",
+          isPremium ? "line-clamp-3" : "line-clamp-2"
+        )}>
+          {agency.description}
+        </p>
+
+        {/* Services */}
         <div className="flex flex-wrap gap-1.5">
-          {agency.services.map((service) => (
-            <Badge key={service} variant="secondary" className="text-xs">
+          {agency.services.slice(0, isPremium ? 4 : isFree ? 2 : 3).map((service) => (
+            <Badge 
+              key={service} 
+              variant="secondary" 
+              className={cn(
+                "text-xs",
+                isPremium && "bg-amber-50 text-amber-800 hover:bg-amber-100"
+              )}
+            >
               {service}
             </Badge>
           ))}
-        </div>
-        <div className="flex items-center justify-between pt-2">
-          {agency.hiring && (
-            <Badge className="bg-green-100 text-green-800 hover:bg-green-100">
-              Hiring Now
+          {agency.services.length > (isPremium ? 4 : isFree ? 2 : 3) && (
+            <Badge variant="outline" className="text-xs text-muted-foreground">
+              +{agency.services.length - (isPremium ? 4 : isFree ? 2 : 3)} more
             </Badge>
           )}
-          <Button variant="outline" size="sm" className="ml-auto">
+        </div>
+
+        {/* Premium: Languages */}
+        {isPremium && agency.languages && agency.languages.length > 0 && (
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <Globe className="h-3.5 w-3.5" />
+            <span>{agency.languages.join(', ')}</span>
+          </div>
+        )}
+
+        {/* Verified: Languages (simpler) */}
+        {isVerified && agency.languages && agency.languages.length > 0 && (
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <Globe className="h-3.5 w-3.5" />
+            <span>{agency.languages.slice(0, 2).join(', ')}{agency.languages.length > 2 ? ` +${agency.languages.length - 2}` : ''}</span>
+          </div>
+        )}
+
+        {/* Premium: Benefits preview */}
+        {isPremium && agency.benefits && agency.benefits.length > 0 && (
+          <div className="flex flex-wrap gap-1">
+            {agency.benefits.slice(0, 3).map((benefit) => (
+              <span 
+                key={benefit} 
+                className="text-xs text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full"
+              >
+                {benefit}
+              </span>
+            ))}
+            {agency.benefits.length > 3 && (
+              <span className="text-xs text-muted-foreground px-2 py-0.5">
+                +{agency.benefits.length - 3} more
+              </span>
+            )}
+          </div>
+        )}
+
+        {/* Footer */}
+        <div className={cn(
+          "flex items-center justify-between pt-2",
+          isPremium && "border-t border-amber-100"
+        )}>
+          <div className="flex items-center gap-2">
+            {agency.hiring && (
+              <Badge className={cn(
+                "text-xs",
+                isPremium 
+                  ? "bg-green-100 text-green-800 hover:bg-green-100" 
+                  : "bg-green-50 text-green-700 hover:bg-green-50"
+              )}>
+                Hiring Now
+              </Badge>
+            )}
+          </div>
+          <Button 
+            variant={isPremium ? "default" : "outline"} 
+            size="sm"
+            className={cn(
+              isPremium && "bg-amber-600 hover:bg-amber-700 text-white"
+            )}
+          >
             View Profile
           </Button>
         </div>

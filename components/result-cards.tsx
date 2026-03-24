@@ -16,25 +16,22 @@ export function AgencyCard({ agency }: { agency: Agency }) {
   return (
     <Card 
       className={cn(
-        "transition-all duration-200 bg-card relative overflow-hidden",
+        "transition-all duration-200 bg-card relative overflow-hidden flex flex-col",
         isPremium && "ring-1 ring-primary/30 shadow-md hover:shadow-lg",
         isVerified && "ring-1 ring-primary/20 hover:shadow-md",
         isFree && "hover:shadow-sm"
       )}
     >
-      {/* Premium badge indicator */}
-      {isPremium && (
-        <div className="absolute top-0 right-0">
-          <div className="bg-gradient-to-l from-primary/10 to-transparent px-3 py-1">
-            <span className="text-xs font-medium text-primary flex items-center gap-1">
-              <Award className="h-3 w-3" />
-              Featured
-            </span>
+      <CardHeader className="pb-3">
+        {/* Hiring badge at top */}
+        {agency.hiring && (
+          <div className="mb-2">
+            <Badge className="text-xs bg-emerald-50 text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-950/50 dark:text-emerald-400">
+              Hiring Now
+            </Badge>
           </div>
-        </div>
-      )}
+        )}
 
-      <CardHeader className={cn("pb-3", isPremium && "pt-6")}>
         <div className="flex items-start justify-between">
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
@@ -93,7 +90,7 @@ export function AgencyCard({ agency }: { agency: Agency }) {
         )}
       </CardHeader>
 
-      <CardContent className="space-y-3">
+      <CardContent className="space-y-3 flex-1">
         <p className={cn(
           "text-sm text-muted-foreground",
           isPremium ? "line-clamp-3" : "line-clamp-2"
@@ -153,27 +150,30 @@ export function AgencyCard({ agency }: { agency: Agency }) {
             )}
           </div>
         )}
-
-        {/* Footer */}
-        <div className={cn(
-          "flex items-center justify-between pt-2",
-          isPremium && "border-t border-primary/10"
-        )}>
-          <div className="flex items-center gap-2">
-            {agency.hiring && (
-              <Badge className="text-xs bg-emerald-50 text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-950/50 dark:text-emerald-400">
-                Hiring Now
-              </Badge>
-            )}
-          </div>
-          <Button 
-            variant={isPremium ? "default" : "outline"} 
-            size="sm"
-          >
-            View Profile
-          </Button>
-        </div>
       </CardContent>
+
+      {/* Footer with darker background */}
+      <div className={cn(
+        "flex items-center justify-between px-6 py-3 mt-auto",
+        isPremium 
+          ? "bg-primary/5 dark:bg-primary/10" 
+          : isVerified 
+            ? "bg-muted/50" 
+            : "bg-muted/30"
+      )}>
+        <span className={cn(
+          "text-xs font-medium",
+          isPremium ? "text-primary" : isVerified ? "text-muted-foreground" : "text-muted-foreground/70"
+        )}>
+          {isPremium ? "Premium Member" : isVerified ? "Verified Member" : "Basic Listing"}
+        </span>
+        <Button 
+          variant={isPremium ? "default" : "outline"} 
+          size="sm"
+        >
+          View Profile
+        </Button>
+      </div>
     </Card>
   )
 }

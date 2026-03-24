@@ -101,16 +101,13 @@ export function AgencyCard({ agency }: { agency: Agency }) {
           {agency.description}
         </p>
 
-        {/* Services */}
+        {/* Services - light gray pills */}
         <div className="flex flex-wrap gap-1.5">
           {agency.services.slice(0, isPremium ? 4 : isFree ? 2 : 3).map((service) => (
             <Badge 
               key={service} 
               variant="secondary" 
-              className={cn(
-                "text-xs",
-                isPremium && "bg-primary/10 text-primary hover:bg-primary/15"
-              )}
+              className="text-xs bg-muted text-muted-foreground hover:bg-muted/80"
             >
               {service}
             </Badge>
@@ -138,13 +135,13 @@ export function AgencyCard({ agency }: { agency: Agency }) {
           </div>
         )}
 
-        {/* Premium: Benefits preview */}
+        {/* Premium: Benefits preview - light blue pills */}
         {isPremium && agency.benefits && agency.benefits.length > 0 && (
           <div className="flex flex-wrap gap-1">
             {agency.benefits.slice(0, 3).map((benefit) => (
               <span 
                 key={benefit} 
-                className="text-xs text-primary bg-primary/10 px-2 py-0.5 rounded-full"
+                className="text-xs text-sky-700 bg-sky-50 px-2 py-0.5 rounded-full dark:text-sky-300 dark:bg-sky-950/50"
               >
                 {benefit}
               </span>
@@ -164,7 +161,7 @@ export function AgencyCard({ agency }: { agency: Agency }) {
         )}>
           <div className="flex items-center gap-2">
             {agency.hiring && (
-              <Badge className="text-xs bg-green-50 text-green-700 hover:bg-green-50">
+              <Badge className="text-xs bg-emerald-50 text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-950/50 dark:text-emerald-400">
                 Hiring Now
               </Badge>
             )}

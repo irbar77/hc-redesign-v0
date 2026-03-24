@@ -47,7 +47,9 @@ export interface Job {
 }
 
 export const mockAgencies: Agency[] = [
-  // Premium tier agency
+  // ===== ZIP 11201 - Brooklyn (6 agencies: 2 premium, 2 verified, 2 free) =====
+  
+  // Premium tier agency #1
   {
     id: '1',
     name: 'Sunrise Home Care',
@@ -66,9 +68,91 @@ export const mockAgencies: Agency[] = [
     responseTime: 'Usually responds within 1 hour',
     staffCount: 150,
   },
-  // Verified tier agency
+  // Premium tier agency #2
   {
     id: '2',
+    name: 'Park Slope Caregivers',
+    location: 'Brooklyn, NY',
+    zipCode: '11201',
+    rating: 4.9,
+    reviewCount: 118,
+    services: ['Dementia Care', '24/7 Monitoring', 'Specialized Memory Care', 'Respite Care'],
+    description: 'High-quality care specifically tailored for patients with memory loss. Our certified dementia care specialists provide round-the-clock monitoring and support.',
+    verified: true,
+    hiring: true,
+    tier: 'premium',
+    yearsInBusiness: 10,
+    languages: ['English', 'Spanish', 'French', 'Creole'],
+    benefits: ['Health Insurance', '401(k)', 'Signing Bonus', 'Career Development'],
+    responseTime: 'Usually responds within 1 hour',
+    staffCount: 85,
+  },
+  // Verified tier agency #1
+  {
+    id: '3',
+    name: 'Brooklyn Bridge Home Care',
+    location: 'Brooklyn, NY',
+    zipCode: '11201',
+    rating: 4.7,
+    reviewCount: 92,
+    services: ['Post-Op Care', 'Mobility Assistance', 'Physical Therapy'],
+    description: 'Specializing in post-surgical recovery and rehabilitation support.',
+    verified: true,
+    hiring: true,
+    tier: 'verified',
+    yearsInBusiness: 6,
+    languages: ['English', 'Polish', 'Russian'],
+  },
+  // Verified tier agency #2
+  {
+    id: '4',
+    name: 'Brooklyn Heights Care',
+    location: 'Brooklyn, NY',
+    zipCode: '11201',
+    rating: 4.5,
+    reviewCount: 38,
+    services: ['Companionship', 'Meal Prep', 'Transportation'],
+    description: 'Local care services from neighbors you can trust. Serving Brooklyn Heights families since 2020.',
+    verified: true,
+    hiring: true,
+    tier: 'verified',
+    yearsInBusiness: 4,
+    languages: ['English', 'Hebrew'],
+  },
+  // Free tier agency #1
+  {
+    id: '5',
+    name: 'Heights Health Services',
+    location: 'Brooklyn, NY',
+    zipCode: '11201',
+    rating: 4.4,
+    reviewCount: 45,
+    services: ['Senior Companionship', 'Light Housekeeping'],
+    description: 'Providing friendly and reliable support for seniors in Brooklyn Heights.',
+    verified: false,
+    hiring: false,
+    tier: 'free',
+  },
+  // Free tier agency #2
+  {
+    id: '6',
+    name: 'Elite Home Assistance',
+    location: 'Brooklyn, NY',
+    zipCode: '11201',
+    rating: 4.6,
+    reviewCount: 73,
+    services: ['Nursing Care', 'Wound Management'],
+    description: 'Professional medical home care provided by registered nurses.',
+    verified: false,
+    hiring: true,
+    tier: 'free',
+  },
+
+  // ===== Other ZIP codes =====
+  
+  // Manhattan - Verified
+  {
+    id: '7',
     name: 'CareFirst Agency',
     location: 'Manhattan, NY',
     zipCode: '10001',
@@ -82,9 +166,9 @@ export const mockAgencies: Agency[] = [
     yearsInBusiness: 8,
     languages: ['English', 'Spanish'],
   },
-  // Premium tier agency
+  // Queens - Premium
   {
-    id: '3',
+    id: '8',
     name: 'Golden Years Care',
     location: 'Queens, NY',
     zipCode: '11375',
@@ -101,9 +185,9 @@ export const mockAgencies: Agency[] = [
     responseTime: 'Usually responds within 30 minutes',
     staffCount: 200,
   },
-  // Free tier agency
+  // Bronx - Free
   {
-    id: '4',
+    id: '9',
     name: 'Helping Hands NYC',
     location: 'Bronx, NY',
     zipCode: '10451',
@@ -114,85 +198,6 @@ export const mockAgencies: Agency[] = [
     verified: false,
     hiring: true,
     tier: 'free',
-  },
-  // Verified tier agency
-  {
-    id: '5',
-    name: 'Brooklyn Bridge Home Care',
-    location: 'Brooklyn, NY',
-    zipCode: '11201',
-    rating: 4.7,
-    reviewCount: 92,
-    services: ['Post-Op Care', 'Mobility Assistance', 'Physical Therapy'],
-    description: 'Specializing in post-surgical recovery and rehabilitation support.',
-    verified: true,
-    hiring: true,
-    tier: 'verified',
-    yearsInBusiness: 6,
-    languages: ['English', 'Polish', 'Russian'],
-  },
-  // Free tier agency
-  {
-    id: '6',
-    name: 'Heights Health Services',
-    location: 'Brooklyn, NY',
-    zipCode: '11201',
-    rating: 4.4,
-    reviewCount: 45,
-    services: ['Senior Companionship', 'Light Housekeeping'],
-    description: 'Providing friendly and reliable support for seniors in Brooklyn Heights.',
-    verified: false,
-    hiring: false,
-    tier: 'free',
-  },
-  // Premium tier agency
-  {
-    id: '7',
-    name: 'Park Slope Caregivers',
-    location: 'Brooklyn, NY',
-    zipCode: '11201',
-    rating: 4.9,
-    reviewCount: 118,
-    services: ['Dementia Care', '24/7 Monitoring', 'Specialized Memory Care'],
-    description: 'High-quality care specifically tailored for patients with memory loss. Our certified dementia care specialists provide round-the-clock monitoring and support.',
-    verified: true,
-    hiring: true,
-    tier: 'premium',
-    yearsInBusiness: 10,
-    languages: ['English', 'Spanish', 'French', 'Creole'],
-    benefits: ['Health Insurance', '401(k)', 'Signing Bonus', 'Career Development'],
-    responseTime: 'Usually responds within 1 hour',
-    staffCount: 85,
-  },
-  // Free tier agency
-  {
-    id: '8',
-    name: 'Elite Home Assistance',
-    location: 'Brooklyn, NY',
-    zipCode: '11201',
-    rating: 4.6,
-    reviewCount: 73,
-    services: ['Nursing Care', 'Wound Management'],
-    description: 'Professional medical home care provided by registered nurses.',
-    verified: false,
-    hiring: true,
-    tier: 'free',
-  },
-  // Verified tier agency
-  {
-    id: '9',
-    name: 'Brooklyn Heights Care',
-    location: 'Brooklyn, NY',
-    zipCode: '11201',
-    rating: 4.5,
-    reviewCount: 38,
-    services: ['Companionship', 'Meal Prep', 'Transportation'],
-    description: 'Local care services from neighbors you can trust.',
-    verified: true,
-    hiring: true,
-    tier: 'verified',
-    yearsInBusiness: 4,
-    languages: ['English', 'Hebrew'],
   },
 ]
 

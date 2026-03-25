@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Bell, Menu, X, User, MessageCircle, MapPin } from 'lucide-react'
+import { Bell, Menu, X, User, MessageCircle, Globe } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -14,10 +14,10 @@ import { ThemeToggle } from '@/components/theme-toggle'
 import { AuthModal } from '@/components/auth-modal'
 
 const languages = [
-  { code: 'en', label: 'English', short: 'EN' },
-  { code: 'es', label: 'Español', short: 'ES' },
-  { code: 'zh', label: '中文', short: 'ZH' },
-  { code: 'ru', label: 'Русский', short: 'RU' },
+  { code: 'en', label: 'English' },
+  { code: 'es', label: 'Espanol' },
+  { code: 'zh', label: '中文' },
+  { code: 'ru', label: 'Русский' },
 ]
 
 export function Header() {
@@ -31,11 +31,12 @@ export function Header() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center">
-            <span className="text-xl font-semibold text-foreground flex items-center">
-              hcz
-              <MapPin className="h-5 w-5 text-primary inline-block -mx-0.5" />
-              p<span className="text-primary">.com</span>
+          <Link href="/" className="flex items-center gap-2">
+            <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-primary text-primary-foreground font-bold text-lg">
+              HC
+            </div>
+            <span className="text-xl font-semibold text-foreground">
+              hczip<span className="text-primary">.com</span>
             </span>
           </Link>
 
@@ -66,10 +67,8 @@ export function Header() {
             {/* Language Switcher */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm" className="hidden sm:flex gap-1 px-2 font-medium">
-                  <span className="text-sm font-semibold text-primary">
-                    {languages.find(l => l.code === currentLanguage)?.short || 'EN'}
-                  </span>
+                <Button variant="ghost" size="icon" className="hidden sm:flex">
+                  <Globe className="h-5 w-5" />
                   <span className="sr-only">Change language</span>
                 </Button>
               </DropdownMenuTrigger>
@@ -80,7 +79,6 @@ export function Header() {
                     onClick={() => setCurrentLanguage(lang.code)}
                     className={currentLanguage === lang.code ? 'bg-muted' : ''}
                   >
-                    <span className="font-semibold text-primary mr-2">{lang.short}</span>
                     {lang.label}
                   </DropdownMenuItem>
                 ))}

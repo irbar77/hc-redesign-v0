@@ -105,14 +105,14 @@ export function SearchFilters({
         </div>
 
         {/* View mode toggle */}
-        <div className="flex items-center gap-0.5 bg-muted rounded-lg p-1">
+        <div className="flex items-center border border-border rounded-lg overflow-hidden">
           <Button
             variant="ghost"
             size="sm"
-            className={`h-8 px-3 gap-1.5 transition-colors ${
+            className={`h-9 px-3 gap-1.5 rounded-none border-r border-border transition-colors ${
               viewMode === 'card' 
-                ? 'bg-background text-foreground shadow-sm' 
-                : 'text-muted-foreground hover:text-foreground'
+                ? 'bg-muted text-foreground' 
+                : 'text-muted-foreground hover:text-foreground hover:bg-transparent'
             }`}
             onClick={() => onViewModeChange('card')}
           >
@@ -122,10 +122,10 @@ export function SearchFilters({
           <Button
             variant="ghost"
             size="sm"
-            className={`h-8 px-3 gap-1.5 transition-colors ${
+            className={`h-9 px-3 gap-1.5 rounded-none border-r border-border transition-colors ${
               viewMode === 'list' 
-                ? 'bg-background text-foreground shadow-sm' 
-                : 'text-muted-foreground hover:text-foreground'
+                ? 'bg-muted text-foreground' 
+                : 'text-muted-foreground hover:text-foreground hover:bg-transparent'
             }`}
             onClick={() => onViewModeChange('list')}
           >
@@ -135,10 +135,10 @@ export function SearchFilters({
           <Button
             variant="ghost"
             size="sm"
-            className={`h-8 px-3 gap-1.5 transition-colors ${
+            className={`h-9 px-3 gap-1.5 rounded-none transition-colors ${
               viewMode === 'map' 
-                ? 'bg-background text-foreground shadow-sm' 
-                : 'text-muted-foreground hover:text-foreground'
+                ? 'bg-muted text-foreground' 
+                : 'text-muted-foreground hover:text-foreground hover:bg-transparent'
             }`}
             onClick={() => onViewModeChange('map')}
           >
@@ -155,7 +155,7 @@ export function SearchFilters({
           value={sortOrder}
           onValueChange={(value) => onSortChange(value as SortOrder)}
         >
-          <SelectTrigger className="w-auto h-9 gap-2 bg-card">
+          <SelectTrigger className="w-auto h-9 gap-2 bg-background border-border">
             {sortOrder === 'a-z' && <ArrowDownAZ className="h-4 w-4" />}
             {sortOrder === 'z-a' && <ArrowUpZA className="h-4 w-4" />}
             {sortOrder === 'none' && <ArrowDownAZ className="h-4 w-4 opacity-50" />}
@@ -170,9 +170,9 @@ export function SearchFilters({
 
         {/* Hiring Now checkbox */}
         <Button
-          variant={hiringNow ? 'default' : 'outline'}
+          variant="outline"
           size="sm"
-          className="h-9 gap-2"
+          className={`h-9 gap-2 ${hiringNow ? 'bg-muted border-foreground/30' : ''}`}
           onClick={() => onHiringNowChange(!hiringNow)}
         >
           <Briefcase className="h-4 w-4" />
@@ -183,14 +183,14 @@ export function SearchFilters({
         <Popover open={languagesOpen} onOpenChange={setLanguagesOpen}>
           <PopoverTrigger asChild>
             <Button
-              variant={selectedLanguages.length > 0 ? 'default' : 'outline'}
+              variant="outline"
               size="sm"
-              className="h-9 gap-2"
+              className={`h-9 gap-2 ${selectedLanguages.length > 0 ? 'bg-muted border-foreground/30' : ''}`}
             >
               <Globe className="h-4 w-4" />
               Languages
               {selectedLanguages.length > 0 && (
-                <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs bg-primary-foreground/20 text-primary-foreground">
+                <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs">
                   {selectedLanguages.length}
                 </Badge>
               )}
@@ -235,14 +235,14 @@ export function SearchFilters({
         <Popover open={benefitsOpen} onOpenChange={setBenefitsOpen}>
           <PopoverTrigger asChild>
             <Button
-              variant={selectedBenefits.length > 0 ? 'default' : 'outline'}
+              variant="outline"
               size="sm"
-              className="h-9 gap-2"
+              className={`h-9 gap-2 ${selectedBenefits.length > 0 ? 'bg-muted border-foreground/30' : ''}`}
             >
               <Gift className="h-4 w-4" />
               Benefits
               {selectedBenefits.length > 0 && (
-                <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs bg-primary-foreground/20 text-primary-foreground">
+                <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs">
                   {selectedBenefits.length}
                 </Badge>
               )}

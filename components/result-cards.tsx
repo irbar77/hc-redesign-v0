@@ -60,7 +60,7 @@ export function AgencyCard({ agency, viewMode = 'card' }: AgencyCardProps) {
                 <div className="flex items-center gap-4 mt-1 text-sm text-muted-foreground">
                   <span className="flex items-center gap-1">
                     <MapPin className="h-4 w-4 shrink-0" />
-                    {agency.location}
+                    {agency.zipCode}, {agency.location}
                   </span>
                   {isPremium && agency.yearsInBusiness && (
                     <span className="flex items-center gap-1">
@@ -136,21 +136,21 @@ export function AgencyCard({ agency, viewMode = 'card' }: AgencyCardProps) {
   return (
     <Card 
       className={cn(
-        "transition-all duration-200 bg-card relative overflow-hidden flex flex-col",
+        "transition-all duration-200 bg-card relative overflow-hidden flex flex-col p-0 gap-0",
         isPremium && "ring-1 ring-primary/30 shadow-md hover:shadow-lg",
         isVerified && "ring-1 ring-primary/20 hover:shadow-md",
         isFree && "hover:shadow-sm"
       )}
     >
-      <CardHeader className="pb-3">
-        {/* Hiring badge at top */}
-        {agency.hiring && (
-          <div className="mb-2">
+      <CardHeader className="pt-6 pb-3">
+        {/* Hiring badge at top - reserved space for alignment */}
+        <div className="min-h-[1.5rem] mb-2">
+          {agency.hiring && (
             <Badge className="text-xs bg-emerald-50 text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-950/50 dark:text-emerald-400">
               Hiring Now
             </Badge>
-          </div>
-        )}
+          )}
+        </div>
 
         <div className="flex items-start justify-between">
           <div className="flex-1 min-w-0">
@@ -167,7 +167,7 @@ export function AgencyCard({ agency, viewMode = 'card' }: AgencyCardProps) {
             </div>
             <div className="flex items-center gap-1 text-sm text-muted-foreground mt-1">
               <MapPin className="h-4 w-4 shrink-0" />
-              <span className="truncate">{agency.location}</span>
+              <span className="truncate">{agency.zipCode}, {agency.location}</span>
             </div>
           </div>
           <div className="flex items-center gap-1 px-2 py-1 rounded-md shrink-0 bg-muted">
@@ -210,7 +210,7 @@ export function AgencyCard({ agency, viewMode = 'card' }: AgencyCardProps) {
         )}
       </CardHeader>
 
-      <CardContent className="space-y-3 flex-1">
+      <CardContent className="space-y-3 flex-1 pb-6">
         <p className={cn(
           "text-sm text-muted-foreground",
           isPremium ? "line-clamp-3" : "line-clamp-2"
@@ -273,7 +273,7 @@ export function AgencyCard({ agency, viewMode = 'card' }: AgencyCardProps) {
       </CardContent>
 
       {/* Footer - flush to bottom */}
-      <div className="flex items-center justify-between px-6 py-3 mt-auto bg-muted/40 dark:bg-muted/20">
+      <div className="flex items-center justify-between px-6 py-4 mt-auto bg-muted/40 dark:bg-muted/20 border-t border-border/50">
         <span className="text-[10px] font-semibold tracking-wider text-muted-foreground/60 uppercase">
           {isPremium ? "PREMIUM MEMBER" : isVerified ? "VERIFIED MEMBER" : "BASIC LISTING"}
         </span>
@@ -304,7 +304,7 @@ export function CaregiverCard({ caregiver }: { caregiver: Caregiver }) {
                 <h3 className="font-semibold text-lg text-card-foreground">{caregiver.name}</h3>
                 <div className="flex items-center gap-1 text-sm text-muted-foreground">
                   <MapPin className="h-4 w-4" />
-                  {caregiver.location}
+                  {caregiver.zipCode}, {caregiver.location}
                 </div>
               </div>
               <div className="flex items-center gap-1 bg-muted px-2 py-1 rounded-md">
@@ -360,7 +360,7 @@ export function JobCard({ job }: { job: Job }) {
             <p className="text-sm text-primary font-medium">{job.agencyName}</p>
             <div className="flex items-center gap-1 text-sm text-muted-foreground mt-1">
               <MapPin className="h-4 w-4" />
-              {job.location}
+              {job.zipCode}, {job.location}
             </div>
           </div>
           <Badge variant="outline">{job.type}</Badge>

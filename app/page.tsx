@@ -72,8 +72,7 @@ export default function Home() {
           <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-10">
               <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl text-balance">
-                Home care connections{' '}
-                <span className="text-primary">made simple</span>
+                Find home care by <span className="text-primary">zip code</span>
               </h1>
               <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
                 The marketplace where caregivers find jobs, agencies find talent,

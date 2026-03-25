@@ -111,7 +111,7 @@ export function SearchFilters({
             size="sm"
             className={`h-8 px-3 gap-1.5 transition-colors ${
               viewMode === 'card' 
-                ? 'bg-background text-foreground shadow-sm' 
+                ? 'bg-card text-foreground shadow-sm' 
                 : 'text-muted-foreground hover:text-foreground'
             }`}
             onClick={() => onViewModeChange('card')}
@@ -124,7 +124,7 @@ export function SearchFilters({
             size="sm"
             className={`h-8 px-3 gap-1.5 transition-colors ${
               viewMode === 'list' 
-                ? 'bg-background text-foreground shadow-sm' 
+                ? 'bg-card text-foreground shadow-sm' 
                 : 'text-muted-foreground hover:text-foreground'
             }`}
             onClick={() => onViewModeChange('list')}
@@ -137,7 +137,7 @@ export function SearchFilters({
             size="sm"
             className={`h-8 px-3 gap-1.5 transition-colors ${
               viewMode === 'map' 
-                ? 'bg-background text-foreground shadow-sm' 
+                ? 'bg-card text-foreground shadow-sm' 
                 : 'text-muted-foreground hover:text-foreground'
             }`}
             onClick={() => onViewModeChange('map')}
@@ -172,7 +172,7 @@ export function SearchFilters({
         <Button
           variant={hiringNow ? 'default' : 'outline'}
           size="sm"
-          className="h-9 gap-2"
+          className={`h-9 gap-2 ${!hiringNow ? 'bg-card' : ''}`}
           onClick={() => onHiringNowChange(!hiringNow)}
         >
           <Briefcase className="h-4 w-4" />
@@ -185,7 +185,7 @@ export function SearchFilters({
             <Button
               variant={selectedLanguages.length > 0 ? 'default' : 'outline'}
               size="sm"
-              className="h-9 gap-2"
+              className={`h-9 gap-2 ${selectedLanguages.length === 0 ? 'bg-card' : ''}`}
             >
               <Globe className="h-4 w-4" />
               Languages
@@ -237,7 +237,7 @@ export function SearchFilters({
             <Button
               variant={selectedBenefits.length > 0 ? 'default' : 'outline'}
               size="sm"
-              className="h-9 gap-2"
+              className={`h-9 gap-2 ${selectedBenefits.length === 0 ? 'bg-card' : ''}`}
             >
               <Gift className="h-4 w-4" />
               Benefits

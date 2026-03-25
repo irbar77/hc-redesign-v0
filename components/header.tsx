@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Bell, Menu, X, User, MessageCircle, Globe } from 'lucide-react'
+import { Bell, Menu, X, User, MessageCircle, MapPin } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -31,12 +31,9 @@ export function Header() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-primary text-primary-foreground font-bold text-lg">
-              HC
-            </div>
-            <span className="text-xl font-semibold text-foreground">
-              hczip<span className="text-primary">.com</span>
+          <Link href="/" className="flex items-center">
+            <span className="text-xl font-semibold text-foreground tracking-tight">
+              hcz<MapPin className="inline-block h-5 w-5 -mx-0.5 text-primary" strokeWidth={2.5} />p<span className="text-primary">.com</span>
             </span>
           </Link>
 
@@ -67,8 +64,8 @@ export function Header() {
             {/* Language Switcher */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="hidden sm:flex">
-                  <Globe className="h-5 w-5" />
+                <Button variant="ghost" size="sm" className="hidden sm:flex font-medium text-xs">
+                  {currentLanguage.toUpperCase()}
                   <span className="sr-only">Change language</span>
                 </Button>
               </DropdownMenuTrigger>

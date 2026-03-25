@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ArrowDownAZ, ArrowUpZA, Briefcase, Globe, Gift, LayoutGrid, MapIcon, List, ChevronDown } from 'lucide-react'
+import { ArrowDownAZ, ArrowUpZA, Briefcase, Globe, Gift, LayoutGrid, MapIcon, List, ChevronDown, BadgeCheck } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import {
@@ -43,6 +43,16 @@ const BENEFITS = [
   'Mileage Reimbursement',
 ]
 
+const CERTIFICATES = [
+  'HHA',
+  'PCA',
+  'CNA',
+  'RN',
+  'LPN',
+  'Registered HHA',
+  'Physical Therapy Aide',
+]
+
 export type SortOrder = 'a-z' | 'z-a' | 'none'
 export type ViewMode = 'card' | 'list' | 'map'
 
@@ -59,6 +69,7 @@ interface SearchFiltersProps {
   onBenefitsChange: (benefits: string[]) => void
   viewMode: ViewMode
   onViewModeChange: (mode: ViewMode) => void
+  activeTab?: 'agencies' | 'caregivers' | 'jobs'
 }
 
 export function SearchFilters({
@@ -74,6 +85,7 @@ export function SearchFilters({
   onBenefitsChange,
   viewMode,
   onViewModeChange,
+  activeTab = 'agencies'
 }: SearchFiltersProps) {
   const [languagesOpen, setLanguagesOpen] = useState(false)
   const [benefitsOpen, setBenefitsOpen] = useState(false)
@@ -176,7 +188,7 @@ export function SearchFilters({
           onClick={() => onHiringNowChange(!hiringNow)}
         >
           <Briefcase className="h-4 w-4" />
-          Hiring Now
+          {activeTab === 'caregivers' ? 'Open to Work' : 'Hiring Now'}
         </Button>
 
         {/* Languages dropdown */}
@@ -239,8 +251,8 @@ export function SearchFilters({
               size="sm"
               className={`h-9 gap-2 ${selectedBenefits.length === 0 ? 'bg-card' : ''}`}
             >
-              <Gift className="h-4 w-4" />
-              Benefits
+              {activeTab === 'caregivers' ? <BadgeCheck className="h-4 w-4" /> : <Gift className="h-4 w-4" />}
+              {activeTab === 'caregivers' ? 'Certificate' : 'Benefits'}
               {selectedBenefits.length > 0 && (
                 <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs bg-primary-foreground/20 text-primary-foreground">
                   {selectedBenefits.length}
@@ -251,9 +263,9 @@ export function SearchFilters({
           </PopoverTrigger>
           <PopoverContent className="w-64 p-3" align="start">
             <div className="space-y-2">
-              <p className="text-sm font-medium mb-3">Select Benefits</p>
+              <p className="text-sm font-medium mb-3">Select {activeTab === 'caregivers' ? 'Certificate' : 'Benefits'}</p>
               <div className="grid gap-2 max-h-48 overflow-y-auto">
-                {BENEFITS.map((benefit) => (
+                {(activeTab === 'caregivers' ? CERTIFICATES : BENEFITS).map((benefit) => (
                   <div key={benefit} className="flex items-center gap-2">
                     <Checkbox
                       id={`benefit-${benefit}`}

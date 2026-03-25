@@ -28,9 +28,15 @@ export interface Caregiver {
   rating: number
   reviewCount: number
   skills: string[]
+  description: string
+  verified: boolean
+  tier: AgencyTier
   available: boolean
-  hourlyRate: string
+  certificate: string
   avatar: string
+  languages?: string[]
+  responseTime?: string
+  completedJobs?: number
 }
 
 export interface Job {
@@ -202,6 +208,7 @@ export const mockAgencies: Agency[] = [
 ]
 
 export const mockCaregivers: Caregiver[] = [
+  // Premium
   {
     id: '1',
     name: 'Maria Santos',
@@ -210,39 +217,76 @@ export const mockCaregivers: Caregiver[] = [
     experience: '8 years',
     rating: 4.9,
     reviewCount: 45,
-    skills: ['CPR Certified', 'Dementia Care', 'Medication Management'],
+    skills: ['CPR Certified', 'Dementia Care', 'Medication Management', 'Physical Therapy'],
+    description: 'Specializing in dementia and Alzheimer\'s care with certified experience. Providing compassionate, round-the-clock support with a focus on preserving dignity and independence.',
+    verified: true,
+    tier: 'premium',
     available: true,
-    hourlyRate: '$18-22/hr',
+    certificate: 'HHA / CNA',
     avatar: 'MS',
+    languages: ['English', 'Spanish'],
+    responseTime: 'Responds within 1 hour',
+    completedJobs: 134,
   },
   {
     id: '2',
+    name: 'Elena Rodriguez',
+    location: 'Brooklyn, NY',
+    zipCode: '11201',
+    experience: '12 years',
+    rating: 5.0,
+    reviewCount: 78,
+    skills: ['Registered HHA', 'Wound Care', 'IV Management', 'Post-Op Care'],
+    description: 'Registered Home Health Aide with extensive experience in post-surgical recovery. I provide individualized and professional medical care tailored to each patient\'s unique needs.',
+    verified: true,
+    tier: 'premium',
+    available: true,
+    certificate: 'Registered HHA',
+    avatar: 'ER',
+    languages: ['English', 'Russian'],
+    responseTime: 'Responds within 30 minutes',
+    completedJobs: 219,
+  },
+  // Verified
+  {
+    id: '3',
     name: 'James Wilson',
-    location: 'Manhattan, NY',
-    zipCode: '10001',
+    location: 'Brooklyn, NY',
+    zipCode: '11201',
     experience: '5 years',
     rating: 4.7,
     reviewCount: 32,
     skills: ['Physical Therapy Aide', 'Mobility Assistance', 'First Aid'],
+    description: 'Dedicated to helping seniors maintain mobility. I assist with daily exercise routines and physical therapy homework in a safe and supportive environment.',
+    verified: true,
+    tier: 'verified',
     available: true,
-    hourlyRate: '$20-25/hr',
+    certificate: 'Physical Therapy Aide',
     avatar: 'JW',
-  },
-  {
-    id: '3',
-    name: 'Elena Rodriguez',
-    location: 'Queens, NY',
-    zipCode: '11375',
-    experience: '12 years',
-    rating: 5.0,
-    reviewCount: 78,
-    skills: ['Registered HHA', 'Wound Care', 'IV Management'],
-    available: false,
-    hourlyRate: '$25-30/hr',
-    avatar: 'ER',
+    languages: ['English'],
+    completedJobs: 45,
   },
   {
     id: '4',
+    name: 'Sarah Jenkins',
+    location: 'Brooklyn, NY',
+    zipCode: '11201',
+    experience: '7 years',
+    rating: 4.8,
+    reviewCount: 62,
+    skills: ['Companionship', 'Meal Preparation', 'Light Housekeeping'],
+    description: 'Experienced in creating a warm, comfortable home environment. I specialize in nutritious meal preparation and providing engaging companionship for elderly clients.',
+    verified: true,
+    tier: 'verified',
+    available: false,
+    certificate: 'PCA',
+    avatar: 'SJ',
+    languages: ['English', 'French'],
+    completedJobs: 89,
+  },
+  // Free
+  {
+    id: '5',
     name: 'David Chen',
     location: 'Brooklyn, NY',
     zipCode: '11201',
@@ -250,9 +294,28 @@ export const mockCaregivers: Caregiver[] = [
     rating: 4.6,
     reviewCount: 21,
     skills: ['Companionship', 'Light Housekeeping', 'Transportation'],
+    description: 'Friendly and reliable caregiver available for errands, appointments, and general household support. Excellent driving record and positive attitude.',
+    verified: false,
+    tier: 'free',
     available: true,
-    hourlyRate: '$15-18/hr',
+    certificate: 'PCA',
     avatar: 'DC',
+  },
+  {
+    id: '6',
+    name: 'Fatima Ali',
+    location: 'Brooklyn, NY',
+    zipCode: '11201',
+    experience: '1 year',
+    rating: 4.4,
+    reviewCount: 12,
+    skills: ['Grocery Shopping', 'Companionship', 'Pet Care'],
+    description: 'Energetic and caring companion for your loved ones. I enjoy helping with daily tasks, reading, and ensuring a safe and positive daily routine.',
+    verified: false,
+    tier: 'free',
+    available: true,
+    certificate: 'HHA',
+    avatar: 'FA',
   },
 ]
 

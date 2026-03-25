@@ -1,6 +1,6 @@
 'use client'
 
-import { MapPin, Star, BadgeCheck, Clock, DollarSign, Users, Globe, Award, Zap } from 'lucide-react'
+import { MapPin, Star, BadgeCheck, ShieldCheck, Clock, DollarSign, Users, Globe, Award, Zap, FileText } from 'lucide-react'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -49,7 +49,7 @@ export function AgencyCard({ agency, viewMode = 'card' }: AgencyCardProps) {
                     {agency.name}
                   </h3>
                   {(isPremium || isVerified) && (
-                    <BadgeCheck className="h-5 w-5 shrink-0 text-primary" />
+                    <ShieldCheck className="h-5 w-5 shrink-0 text-primary" />
                   )}
                   <div className="flex items-center gap-1 px-2 py-0.5 rounded-md shrink-0 bg-muted ml-auto sm:ml-2">
                     <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
@@ -162,7 +162,7 @@ export function AgencyCard({ agency, viewMode = 'card' }: AgencyCardProps) {
                 {agency.name}
               </h3>
               {(isPremium || isVerified) && (
-                <BadgeCheck className="h-5 w-5 shrink-0 text-primary" />
+                <ShieldCheck className="h-5 w-5 shrink-0 text-primary" />
               )}
             </div>
             <div className="flex items-center gap-1 text-sm text-muted-foreground mt-1">
@@ -289,63 +289,166 @@ export function AgencyCard({ agency, viewMode = 'card' }: AgencyCardProps) {
 }
 
 export function CaregiverCard({ caregiver }: { caregiver: Caregiver }) {
+  const isPremium = caregiver.tier === 'premium'
+  const isVerified = caregiver.tier === 'verified'
+  const isFree = caregiver.tier === 'free'
+
   return (
-    <Card className="hover:shadow-md transition-shadow bg-card">
-      <CardHeader className="pb-3">
-        <div className="flex items-start gap-4">
-          <Avatar className="h-14 w-14 bg-primary/10">
-            <AvatarFallback className="bg-primary/10 text-primary font-semibold">
-              {caregiver.avatar}
-            </AvatarFallback>
-          </Avatar>
-          <div className="flex-1">
-            <div className="flex items-start justify-between">
-              <div>
-                <h3 className="font-semibold text-lg text-card-foreground">{caregiver.name}</h3>
-                <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                  <MapPin className="h-4 w-4" />
-                  {caregiver.zipCode}, {caregiver.location}
-                </div>
+    <Card 
+      className={cn(
+        "transition-all duration-200 bg-card relative overflow-hidden flex flex-col p-0 gap-0",
+        isPremium && "ring-1 ring-primary/30 shadow-md hover:shadow-lg",
+        isVerified && "ring-1 ring-primary/20 hover:shadow-md",
+        isFree && "hover:shadow-sm"
+      )}
+    >
+      <CardHeader className="pt-6 pb-3">
+        {/* Availability badge at top - reserved space for alignment */}
+        <div className="min-h-[1.5rem] mb-2">
+          {caregiver.available && (
+            <Badge className="text-xs bg-emerald-50 text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-950/50 dark:text-emerald-400">
+              Available Now
+            </Badge>
+          )}
+        </div>
+
+        <div className="flex items-start justify-between">
+          <div className="flex items-start gap-3 flex-1 min-w-0">
+            <Avatar className="h-10 w-10 sm:h-12 sm:w-12 bg-primary/10">
+              <AvatarFallback className="bg-primary/10 text-primary font-semibold text-sm sm:text-base">
+                {caregiver.avatar}
+              </AvatarFallback>
+            </Avatar>
+            <div className="flex-1 min-w-0 mt-0.5">
+              <div className="flex items-center gap-2">
+                <h3 className={cn(
+                  "font-semibold text-card-foreground truncate",
+                  isPremium ? "text-lg" : "text-base"
+                )}>
+                  {caregiver.name}
+                </h3>
+                {(isPremium || isVerified) && (
+                  <ShieldCheck className="h-5 w-5 shrink-0 text-primary" />
+                )}
               </div>
-              <div className="flex items-center gap-1 bg-muted px-2 py-1 rounded-md">
-                <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                <span className="font-medium text-sm">{caregiver.rating}</span>
+              <div className="flex items-center gap-1 text-sm text-muted-foreground mt-0.5">
+                <MapPin className="h-4 w-4 shrink-0" />
+                <span className="truncate">{caregiver.zipCode}, {caregiver.location}</span>
               </div>
             </div>
           </div>
+          <div className="flex items-center gap-1 px-2 py-1 rounded-md shrink-0 bg-muted ml-2">
+            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+            <span className="font-medium text-sm">{caregiver.rating}</span>
+            <span className="text-xs text-muted-foreground hidden sm:inline-block">({caregiver.reviewCount})</span>
+          </div>
         </div>
+
+        {/* Premium: Extra info row */}
+        {isPremium && (
+          <div className="flex items-center gap-4 mt-3 text-xs text-muted-foreground">
+            <span className="flex items-center gap-1">
+              <BadgeCheck className="h-3.5 w-3.5 text-primary" />
+              {caregiver.certificate}
+            </span>
+            <span className="flex items-center gap-1">
+              <Clock className="h-3.5 w-3.5 text-primary" />
+              {caregiver.experience}
+            </span>
+            {caregiver.responseTime && (
+              <span className="flex items-center gap-1">
+                <Zap className="h-3.5 w-3.5 text-yellow-500" />
+                Fast response
+              </span>
+            )}
+          </div>
+        )}
+
+        {/* Verified: Relevant info row */}
+        {isVerified && (
+          <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
+            <span className="flex items-center gap-1">
+              <BadgeCheck className="h-3.5 w-3.5 text-primary" />
+              {caregiver.certificate}
+            </span>
+            <span className="flex items-center gap-1">
+              <Clock className="h-3.5 w-3.5 text-primary" />
+              {caregiver.experience}
+            </span>
+          </div>
+        )}
+
+        {/* Free: Relevant info row */}
+        {isFree && (
+          <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
+            <span className="flex items-center gap-1">
+              <BadgeCheck className="h-3.5 w-3.5 text-primary" />
+              {caregiver.certificate}
+            </span>
+            <span className="flex items-center gap-1">
+              <Clock className="h-3.5 w-3.5 text-primary" />
+              {caregiver.experience}
+            </span>
+          </div>
+        )}
       </CardHeader>
-      <CardContent className="space-y-3">
-        <div className="flex items-center gap-4 text-sm">
-          <div className="flex items-center gap-1 text-muted-foreground">
-            <Clock className="h-4 w-4" />
-            {caregiver.experience}
-          </div>
-          <div className="flex items-center gap-1 text-muted-foreground">
-            <DollarSign className="h-4 w-4" />
-            {caregiver.hourlyRate}
-          </div>
-        </div>
+
+      <CardContent className="space-y-3 flex-1 pb-6">
+        <p className={cn(
+          "text-sm text-muted-foreground",
+          isPremium ? "line-clamp-3" : "line-clamp-2"
+        )}>
+          {caregiver.description}
+        </p>
+
+        {/* Skills - light gray pills */}
         <div className="flex flex-wrap gap-1.5">
-          {caregiver.skills.map((skill) => (
-            <Badge key={skill} variant="secondary" className="text-xs">
+          {caregiver.skills.slice(0, isPremium ? 4 : isFree ? 2 : 3).map((skill) => (
+            <Badge 
+              key={skill} 
+              variant="secondary" 
+              className="text-xs bg-muted text-muted-foreground hover:bg-muted/80"
+            >
               {skill}
             </Badge>
           ))}
-        </div>
-        <div className="flex items-center justify-between pt-2">
-          {caregiver.available ? (
-            <Badge className="bg-green-100 text-green-800 hover:bg-green-100">
-              Available
+          {caregiver.skills.length > (isPremium ? 4 : isFree ? 2 : 3) && (
+            <Badge variant="outline" className="text-xs text-muted-foreground">
+              +{caregiver.skills.length - (isPremium ? 4 : isFree ? 2 : 3)} more
             </Badge>
-          ) : (
-            <Badge variant="secondary">Currently Unavailable</Badge>
           )}
-          <Button variant="outline" size="sm">
-            Contact
-          </Button>
         </div>
+
+        {/* Premium: Languages */}
+        {isPremium && caregiver.languages && caregiver.languages.length > 0 && (
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <Globe className="h-3.5 w-3.5" />
+            <span>{caregiver.languages.join(', ')}</span>
+          </div>
+        )}
+
+        {/* Verified: Languages (simpler) */}
+        {isVerified && caregiver.languages && caregiver.languages.length > 0 && (
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <Globe className="h-3.5 w-3.5" />
+            <span>{caregiver.languages.slice(0, 2).join(', ')}{caregiver.languages.length > 2 ? ` +${caregiver.languages.length - 2}` : ''}</span>
+          </div>
+        )}
+
       </CardContent>
+
+      {/* Footer - flush to bottom */}
+      <div className="flex items-center justify-between px-6 py-4 mt-auto bg-muted/40 dark:bg-muted/20 border-t border-border/50">
+        <span className="text-[10px] font-semibold tracking-wider text-muted-foreground/60 uppercase">
+          {isPremium ? "PREMIUM MEMBER" : isVerified ? "VERIFIED MEMBER" : "BASIC LISTING"}
+        </span>
+        <Button 
+          variant={isPremium ? "default" : "outline"} 
+          size="sm"
+        >
+          View Profile
+        </Button>
+      </div>
     </Card>
   )
 }

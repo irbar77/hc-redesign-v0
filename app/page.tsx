@@ -114,6 +114,7 @@ export default function Home() {
                     onBenefitsChange={setSelectedBenefits}
                     viewMode={viewMode}
                     onViewModeChange={setViewMode}
+                    activeTab={activeTab}
                   />
                 </div>
 

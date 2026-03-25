@@ -52,6 +52,8 @@ export interface Job {
   postedAt: string
   verified: boolean
   tier: AgencyTier
+  hours?: string
+  schedule?: string
 }
 
 export const mockAgencies: Agency[] = [
@@ -331,6 +333,8 @@ export const mockJobs: Job[] = [
     zipCode: '11201',
     type: 'Full-time',
     salary: '$800-1000/week',
+    hours: 'Live-in',
+    schedule: '7 days/week',
     description: 'Seeking experienced caregiver for live-in position with elderly client.',
     requirements: ['HHA Certificate', '3+ years experience', 'Valid drivers license'],
     postedAt: '2 days ago',
@@ -345,6 +349,8 @@ export const mockJobs: Job[] = [
     zipCode: '11375',
     type: 'Part-time',
     salary: '$20-25/hr',
+    hours: '24 hrs/wk',
+    schedule: 'Sat-Sun, 8am-8pm',
     description: 'Part-time weekend position for dementia care specialist.',
     requirements: ['Dementia care experience', 'CPR Certified', 'References required'],
     postedAt: '1 week ago',
@@ -360,6 +366,8 @@ export const mockJobs: Job[] = [
     zipCode: '10001',
     type: 'Full-time',
     salary: '$18-22/hr',
+    hours: '40 hrs/wk',
+    schedule: 'Mon-Fri, 9am-5pm',
     description: 'Multiple positions available for certified HHAs.',
     requirements: ['HHA Certificate', 'Background check', 'Reliable transportation'],
     postedAt: '3 days ago',
@@ -375,6 +383,8 @@ export const mockJobs: Job[] = [
     zipCode: '10451',
     type: 'Full-time',
     salary: '$22-28/hr',
+    hours: '36 hrs/wk',
+    schedule: 'Mon-Wed, 8pm-8am',
     description: 'Overnight caregiver needed for post-surgery recovery patient.',
     requirements: ['Night shift availability', 'Medical experience preferred', 'CPR Certified'],
     postedAt: '5 days ago',

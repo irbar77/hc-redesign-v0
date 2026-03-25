@@ -1,6 +1,6 @@
 'use client'
 
-import { MapPin, Star, BadgeCheck, ShieldCheck, Clock, DollarSign, Users, Globe, Award, Zap, FileText } from 'lucide-react'
+import { MapPin, Star, BadgeCheck, ShieldCheck, Clock, DollarSign, Users, Globe, Award, Zap, FileText, Calendar } from 'lucide-react'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -501,35 +501,27 @@ export function JobCard({ job }: { job: Job }) {
           </div>
         </div>
 
-        {/* Premium: Extra info row */}
-        {isPremium && (
-          <div className="flex items-center gap-4 mt-3 text-xs text-muted-foreground">
-            <span className="flex items-center gap-1">
-              <DollarSign className="h-3.5 w-3.5 text-primary" />
+        {/* Unified Info Row for all tiers since salary & schedule are critical for Cases */}
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-3 text-xs text-muted-foreground">
+          {job.salary && (
+            <span className="flex items-center gap-1 font-medium text-primary">
+              <DollarSign className="h-3.5 w-3.5" />
               {job.salary}
             </span>
-          </div>
-        )}
-
-        {/* Verified: Relevant info row */}
-        {isVerified && (
-          <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
+          )}
+          {job.hours && (
             <span className="flex items-center gap-1">
-              <DollarSign className="h-3.5 w-3.5 text-primary" />
-              {job.salary}
+              <Clock className="h-3.5 w-3.5" />
+              {job.hours}
             </span>
-          </div>
-        )}
-
-        {/* Free: Relevant info row */}
-        {isFree && (
-          <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
+          )}
+          {job.schedule && (
             <span className="flex items-center gap-1">
-              <DollarSign className="h-3.5 w-3.5 text-primary" />
-              {job.salary}
+              <Calendar className="h-3.5 w-3.5" />
+              {job.schedule}
             </span>
-          </div>
-        )}
+          )}
+        </div>
       </CardHeader>
 
       <CardContent className="space-y-3 flex-1 pb-6">

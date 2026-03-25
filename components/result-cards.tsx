@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { Building2 } from 'lucide-react'
 import type { Agency, Caregiver, Job } from '@/lib/mock-data'
 import type { ViewMode } from '@/components/search-filters'
 import { cn } from '@/lib/utils'
@@ -454,39 +455,123 @@ export function CaregiverCard({ caregiver }: { caregiver: Caregiver }) {
 }
 
 export function JobCard({ job }: { job: Job }) {
+  const isPremium = job.tier === 'premium'
+  const isVerified = job.tier === 'verified'
+  const isFree = job.tier === 'free'
+
   return (
-    <Card className="hover:shadow-md transition-shadow bg-card">
-      <CardHeader className="pb-3">
+    <Card 
+      className={cn(
+        "transition-all duration-200 bg-card relative overflow-hidden flex flex-col p-0 gap-0",
+        isPremium && "ring-1 ring-primary/30 shadow-md hover:shadow-lg",
+        isVerified && "ring-1 ring-primary/20 hover:shadow-md",
+        isFree && "hover:shadow-sm"
+      )}
+    >
+      <CardHeader className="pt-6 pb-3">
+        {/* Availability badge at top - reserved space for alignment */}
+        <div className="min-h-[1.5rem] mb-2 flex justify-between items-center">
+          <Badge variant="outline" className="text-xs bg-muted">
+            {job.type}
+          </Badge>
+          <span className="text-xs text-muted-foreground font-medium">{job.postedAt}</span>
+        </div>
+
         <div className="flex items-start justify-between">
-          <div>
-            <h3 className="font-semibold text-lg text-card-foreground">{job.title}</h3>
-            <p className="text-sm text-primary font-medium">{job.agencyName}</p>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2">
+              <h3 className={cn(
+                "font-semibold text-card-foreground truncate",
+                isPremium ? "text-lg" : "text-base"
+              )}>
+                {job.title}
+              </h3>
+              {(isPremium || isVerified) && (
+                <ShieldCheck className="h-5 w-5 shrink-0 text-primary" />
+              )}
+            </div>
+            <div className="flex items-center gap-1 text-sm text-primary font-medium mt-0.5">
+              <Building2 className="h-4 w-4 shrink-0" />
+              <span className="truncate">{job.agencyName}</span>
+            </div>
             <div className="flex items-center gap-1 text-sm text-muted-foreground mt-1">
-              <MapPin className="h-4 w-4" />
-              {job.zipCode}, {job.location}
+              <MapPin className="h-4 w-4 shrink-0" />
+              <span className="truncate">{job.zipCode}, {job.location}</span>
             </div>
           </div>
-          <Badge variant="outline">{job.type}</Badge>
         </div>
+
+        {/* Premium: Extra info row */}
+        {isPremium && (
+          <div className="flex items-center gap-4 mt-3 text-xs text-muted-foreground">
+            <span className="flex items-center gap-1">
+              <DollarSign className="h-3.5 w-3.5 text-primary" />
+              {job.salary}
+            </span>
+          </div>
+        )}
+
+        {/* Verified: Relevant info row */}
+        {isVerified && (
+          <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
+            <span className="flex items-center gap-1">
+              <DollarSign className="h-3.5 w-3.5 text-primary" />
+              {job.salary}
+            </span>
+          </div>
+        )}
+
+        {/* Free: Relevant info row */}
+        {isFree && (
+          <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
+            <span className="flex items-center gap-1">
+              <DollarSign className="h-3.5 w-3.5 text-primary" />
+              {job.salary}
+            </span>
+          </div>
+        )}
       </CardHeader>
-      <CardContent className="space-y-3">
-        <p className="text-sm text-muted-foreground">{job.description}</p>
-        <div className="flex items-center gap-2 text-sm">
-          <DollarSign className="h-4 w-4 text-muted-foreground" />
-          <span className="font-medium">{job.salary}</span>
-        </div>
+
+      <CardContent className="space-y-3 flex-1 pb-6">
+        <p className={cn(
+          "text-sm text-muted-foreground",
+          isPremium ? "line-clamp-3" : "line-clamp-2"
+        )}>
+          {job.description}
+        </p>
+
+        {/* Requirements - light gray pills */}
         <div className="flex flex-wrap gap-1.5">
-          {job.requirements.slice(0, 3).map((req) => (
-            <Badge key={req} variant="secondary" className="text-xs">
+          {job.requirements.slice(0, isPremium ? 4 : isFree ? 2 : 3).map((req) => (
+            <Badge 
+              key={req} 
+              variant="secondary" 
+              className="text-xs bg-muted text-muted-foreground hover:bg-muted/80"
+            >
               {req}
             </Badge>
           ))}
-        </div>
-        <div className="flex items-center justify-between pt-2">
-          <span className="text-xs text-muted-foreground">{job.postedAt}</span>
-          <Button size="sm">Apply Now</Button>
+          {job.requirements.length > (isPremium ? 4 : isFree ? 2 : 3) && (
+            <Badge variant="outline" className="text-xs text-muted-foreground">
+              +{job.requirements.length - (isPremium ? 4 : isFree ? 2 : 3)} more
+            </Badge>
+          )}
         </div>
       </CardContent>
+
+      {/* Footer - flush to bottom */}
+      <div className="flex items-center justify-between px-6 py-4 mt-auto bg-muted/40 dark:bg-muted/20 border-t border-border/50">
+        <span className="text-[10px] font-semibold tracking-wider text-muted-foreground/60 uppercase">
+          {isPremium ? "PREMIUM LISTING" : isVerified ? "VERIFIED LISTING" : "BASIC LISTING"}
+        </span>
+        <Button 
+          variant={isPremium ? "default" : "outline"} 
+          size="sm"
+        >
+          View Case
+        </Button>
+      </div>
     </Card>
   )
 }
+

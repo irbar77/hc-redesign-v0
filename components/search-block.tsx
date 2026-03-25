@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Search, MapPin, Building2, Users, Briefcase } from 'lucide-react'
+import { Search, MapPin, Building2, Users, Briefcase, ClipboardList } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -54,8 +54,8 @@ export function SearchBlock({ onSearch, initialTab = 'agencies', compact = false
             value="jobs"
             className="flex items-center gap-2 data-[state=active]:bg-card data-[state=active]:text-foreground"
           >
-            <Briefcase className="h-4 w-4" />
-            <span className="hidden sm:inline">Jobs</span>
+            <ClipboardList className="h-4 w-4" />
+            <span className="hidden sm:inline">Cases</span>
           </TabsTrigger>
         </TabsList>
       </Tabs>

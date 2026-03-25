@@ -58,7 +58,7 @@ export default function Home() {
   const stats = [
     { icon: <Building2 className="h-5 w-5" />, value: '500+', label: 'Agencies' },
     { icon: <Users className="h-5 w-5" />, value: '10,000+', label: 'Caregivers' },
-    { icon: <Briefcase className="h-5 w-5" />, value: '2,500+', label: 'Active Jobs' },
+    { icon: <Briefcase className="h-5 w-5" />, value: '2,500+', label: 'Open Cases' },
   ]
 
   return (

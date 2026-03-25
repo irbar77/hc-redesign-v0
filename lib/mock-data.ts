@@ -50,6 +50,8 @@ export interface Job {
   description: string
   requirements: string[]
   postedAt: string
+  verified: boolean
+  tier: AgencyTier
 }
 
 export const mockAgencies: Agency[] = [
@@ -320,6 +322,7 @@ export const mockCaregivers: Caregiver[] = [
 ]
 
 export const mockJobs: Job[] = [
+  // Premium
   {
     id: '1',
     title: 'Live-in Caregiver',
@@ -331,6 +334,8 @@ export const mockJobs: Job[] = [
     description: 'Seeking experienced caregiver for live-in position with elderly client.',
     requirements: ['HHA Certificate', '3+ years experience', 'Valid drivers license'],
     postedAt: '2 days ago',
+    verified: true,
+    tier: 'premium',
   },
   {
     id: '2',
@@ -343,7 +348,10 @@ export const mockJobs: Job[] = [
     description: 'Part-time weekend position for dementia care specialist.',
     requirements: ['Dementia care experience', 'CPR Certified', 'References required'],
     postedAt: '1 week ago',
+    verified: true,
+    tier: 'premium',
   },
+  // Verified
   {
     id: '3',
     title: 'Home Health Aide',
@@ -355,7 +363,10 @@ export const mockJobs: Job[] = [
     description: 'Multiple positions available for certified HHAs.',
     requirements: ['HHA Certificate', 'Background check', 'Reliable transportation'],
     postedAt: '3 days ago',
+    verified: true,
+    tier: 'verified',
   },
+  // Free
   {
     id: '4',
     title: 'Night Shift Caregiver',
@@ -367,6 +378,8 @@ export const mockJobs: Job[] = [
     description: 'Overnight caregiver needed for post-surgery recovery patient.',
     requirements: ['Night shift availability', 'Medical experience preferred', 'CPR Certified'],
     postedAt: '5 days ago',
+    verified: false,
+    tier: 'free',
   },
 ]
 

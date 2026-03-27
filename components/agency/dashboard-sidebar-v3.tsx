@@ -73,16 +73,16 @@ export function AgencyDashboardSidebarV3() {
 
   return (
     <Sidebar className="border-r-0 inset-y-0 h-svh bg-sidebar">
-      {/* Logo Section */}
-      <SidebarHeader className="p-4 pb-2">
-        <Link href="/" className="flex items-center gap-2 px-2 py-1.5 -mx-2 rounded-md hover:bg-sidebar-accent transition-colors">
+      {/* Logo Section - same height as content header (h-14 = 56px) */}
+      <SidebarHeader className="h-14 flex items-center px-4 border-b border-border">
+        <Link href="/" className="flex items-center gap-2 rounded-md hover:opacity-80 transition-opacity">
           <span className="text-xl font-semibold text-foreground tracking-tight">
             hcz<MapPin className="inline-block h-5 w-5 -mx-0.5 text-primary" strokeWidth={2.5} />p<span className="text-primary">.com</span>
           </span>
         </Link>
       </SidebarHeader>
 
-      <SidebarHeader className="px-4 py-2">
+      <SidebarHeader className="px-4 py-3">
         {/* Agency Account Dropdown */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

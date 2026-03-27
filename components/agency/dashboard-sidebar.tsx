@@ -61,7 +61,7 @@ export function AgencyDashboardSidebar() {
   const pathname = usePathname()
 
   return (
-    <Sidebar className="border-r border-sidebar-border">
+    <Sidebar className="border-r border-sidebar-border top-16 h-[calc(100svh-4rem)]">
       <SidebarHeader className="p-4">
         {/* Agency Info */}
         <div className="flex items-center gap-3">

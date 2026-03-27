@@ -13,7 +13,6 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Switch } from '@/components/ui/switch'
 import { MultiSelectCombobox } from '../multi-select-combobox'
-import { ChipSelector } from '../chip-selector'
 import { Briefcase } from 'lucide-react'
 
 interface HiringSectionProps {
@@ -32,49 +31,49 @@ const positionOptions = [
   { value: 'live-in', label: 'Live-in Caregiver' },
 ]
 
-const defaultBenefits = [
-  'Health Insurance',
-  'Dental Insurance',
-  'Vision Insurance',
-  'Paid Time Off',
-  '401(k)',
-  'Flexible Schedule',
-  'Weekly Pay',
-  'Direct Deposit',
-  'Training Provided',
-  'Referral Bonus',
-  'Sign-on Bonus',
-  'Transportation Assistance',
+const benefitsOptions = [
+  { value: 'health-insurance', label: 'Health Insurance' },
+  { value: 'dental-insurance', label: 'Dental Insurance' },
+  { value: 'vision-insurance', label: 'Vision Insurance' },
+  { value: 'paid-time-off', label: 'Paid Time Off' },
+  { value: '401k', label: '401(k)' },
+  { value: 'flexible-schedule', label: 'Flexible Schedule' },
+  { value: 'weekly-pay', label: 'Weekly Pay' },
+  { value: 'direct-deposit', label: 'Direct Deposit' },
+  { value: 'training-provided', label: 'Training Provided' },
+  { value: 'referral-bonus', label: 'Referral Bonus' },
+  { value: 'sign-on-bonus', label: 'Sign-on Bonus' },
+  { value: 'transportation-assistance', label: 'Transportation Assistance' },
 ]
 
-const defaultRequirements = [
-  '1+ Year Experience',
-  '2+ Years Experience',
-  'Alzheimer Care Experience',
-  'Dementia Care Experience',
-  'Hoyer Lift Experience',
-  'Wound Care Experience',
-  'Valid Driver License',
-  'Own Transportation',
-  'COVID-19 Vaccinated',
-  'Flu Shot',
-  'TB Test',
-  'Background Check Clearance',
+const requirementsOptions = [
+  { value: '1-year-exp', label: '1+ Year Experience' },
+  { value: '2-years-exp', label: '2+ Years Experience' },
+  { value: 'alzheimer-exp', label: 'Alzheimer Care Experience' },
+  { value: 'dementia-exp', label: 'Dementia Care Experience' },
+  { value: 'hoyer-lift-exp', label: 'Hoyer Lift Experience' },
+  { value: 'wound-care-exp', label: 'Wound Care Experience' },
+  { value: 'driver-license', label: 'Valid Driver License' },
+  { value: 'own-transportation', label: 'Own Transportation' },
+  { value: 'covid-vaccinated', label: 'COVID-19 Vaccinated' },
+  { value: 'flu-shot', label: 'Flu Shot' },
+  { value: 'tb-test', label: 'TB Test' },
+  { value: 'background-check', label: 'Background Check Clearance' },
 ]
 
-const defaultDocuments = [
-  'PCA Certificate',
-  'HHA Certificate',
-  'CNA License',
-  'CPR Certification',
-  'First Aid Certification',
-  'Physical Exam',
-  'TB Test Results',
-  'Drug Screen',
-  'Background Check',
-  'I-9 Documents',
-  'Social Security Card',
-  'State ID / Driver License',
+const documentsOptions = [
+  { value: 'pca-cert', label: 'PCA Certificate' },
+  { value: 'hha-cert', label: 'HHA Certificate' },
+  { value: 'cna-license', label: 'CNA License' },
+  { value: 'cpr-cert', label: 'CPR Certification' },
+  { value: 'first-aid-cert', label: 'First Aid Certification' },
+  { value: 'physical-exam', label: 'Physical Exam' },
+  { value: 'tb-results', label: 'TB Test Results' },
+  { value: 'drug-screen', label: 'Drug Screen' },
+  { value: 'background-check', label: 'Background Check' },
+  { value: 'i9-docs', label: 'I-9 Documents' },
+  { value: 'ssn-card', label: 'Social Security Card' },
+  { value: 'state-id', label: 'State ID / Driver License' },
 ]
 
 export function HiringSection({
@@ -89,19 +88,19 @@ export function HiringSection({
   const [minRate, setMinRate] = useState('18')
   const [maxRate, setMaxRate] = useState('25')
   const [selectedBenefits, setSelectedBenefits] = useState<string[]>([
-    'Health Insurance',
-    'Paid Time Off',
-    'Weekly Pay',
-    'Direct Deposit',
+    'health-insurance',
+    'paid-time-off',
+    'weekly-pay',
+    'direct-deposit',
   ])
   const [selectedRequirements, setSelectedRequirements] = useState<string[]>([
-    '1+ Year Experience',
-    'COVID-19 Vaccinated',
+    '1-year-exp',
+    'covid-vaccinated',
   ])
   const [selectedDocuments, setSelectedDocuments] = useState<string[]>([
-    'PCA Certificate',
-    'CPR Certification',
-    'Background Check',
+    'pca-cert',
+    'cpr-cert',
+    'background-check',
   ])
   const [description, setDescription] = useState(
     'Join our team of dedicated caregivers! We offer competitive pay, flexible scheduling, and a supportive work environment. We are looking for compassionate individuals who are committed to providing quality care to our clients.'
@@ -196,45 +195,45 @@ export function HiringSection({
           {/* Benefits */}
           <div className="space-y-2">
             <Label>Benefits Offered</Label>
-            <ChipSelector
-              options={defaultBenefits}
+            <MultiSelectCombobox
+              options={benefitsOptions}
               selected={selectedBenefits}
               onChange={(values) => {
                 setSelectedBenefits(values)
                 handleChange()
               }}
-              allowCustom
-              customPlaceholder="Add custom benefit..."
+              placeholder="Select benefits..."
+              searchPlaceholder="Search benefits..."
             />
           </div>
 
           {/* Requirements */}
           <div className="space-y-2">
             <Label>Requirements</Label>
-            <ChipSelector
-              options={defaultRequirements}
+            <MultiSelectCombobox
+              options={requirementsOptions}
               selected={selectedRequirements}
               onChange={(values) => {
                 setSelectedRequirements(values)
                 handleChange()
               }}
-              allowCustom
-              customPlaceholder="Add custom requirement..."
+              placeholder="Select requirements..."
+              searchPlaceholder="Search requirements..."
             />
           </div>
 
           {/* Required Documents */}
           <div className="space-y-2">
             <Label>Required Documents</Label>
-            <ChipSelector
-              options={defaultDocuments}
+            <MultiSelectCombobox
+              options={documentsOptions}
               selected={selectedDocuments}
               onChange={(values) => {
                 setSelectedDocuments(values)
                 handleChange()
               }}
-              allowCustom
-              customPlaceholder="Add custom document..."
+              placeholder="Select documents..."
+              searchPlaceholder="Search documents..."
             />
           </div>
 

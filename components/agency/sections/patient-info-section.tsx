@@ -10,32 +10,31 @@ import {
 } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 import { MultiSelectCombobox } from '../multi-select-combobox'
-import { ChipSelector } from '../chip-selector'
 import { HeartPulse } from 'lucide-react'
 
 interface PatientInfoSectionProps {
   onChangesMade: () => void
 }
 
-const defaultInsurances = [
-  'Medicare',
-  'Medicaid',
-  'MLTC (Managed Long Term Care)',
-  'Private Pay',
-  'Aetna',
-  'Blue Cross Blue Shield',
-  'Cigna',
-  'United Healthcare',
-  'Humana',
-  'Fidelis Care',
-  'Healthfirst',
-  'MetroPlus',
-  'Emblem Health',
-  'VNS Choice',
-  'Senior Whole Health',
-  'Centers Plan for Healthy Living',
-  'ElderServe',
-  'Independence Care System',
+const insuranceOptions = [
+  { value: 'medicare', label: 'Medicare' },
+  { value: 'medicaid', label: 'Medicaid' },
+  { value: 'mltc', label: 'MLTC (Managed Long Term Care)' },
+  { value: 'private-pay', label: 'Private Pay' },
+  { value: 'aetna', label: 'Aetna' },
+  { value: 'bcbs', label: 'Blue Cross Blue Shield' },
+  { value: 'cigna', label: 'Cigna' },
+  { value: 'united-healthcare', label: 'United Healthcare' },
+  { value: 'humana', label: 'Humana' },
+  { value: 'fidelis', label: 'Fidelis Care' },
+  { value: 'healthfirst', label: 'Healthfirst' },
+  { value: 'metroplus', label: 'MetroPlus' },
+  { value: 'emblem-health', label: 'Emblem Health' },
+  { value: 'vns-choice', label: 'VNS Choice' },
+  { value: 'senior-whole-health', label: 'Senior Whole Health' },
+  { value: 'centers-plan', label: 'Centers Plan for Healthy Living' },
+  { value: 'elderserve', label: 'ElderServe' },
+  { value: 'independence-care', label: 'Independence Care System' },
 ]
 
 const servicesForPatientsOptions = [
@@ -82,10 +81,10 @@ const countyOptions = [
 
 export function PatientInfoSection({ onChangesMade }: PatientInfoSectionProps) {
   const [selectedInsurances, setSelectedInsurances] = useState<string[]>([
-    'Medicare',
-    'Medicaid',
-    'MLTC (Managed Long Term Care)',
-    'Private Pay',
+    'medicare',
+    'medicaid',
+    'mltc',
+    'private-pay',
   ])
   const [selectedServices, setSelectedServices] = useState<string[]>([
     'personal-care',
@@ -118,15 +117,15 @@ export function PatientInfoSection({ onChangesMade }: PatientInfoSectionProps) {
         {/* Accepted Insurances */}
         <div className="space-y-2">
           <Label>Accepted Insurances</Label>
-          <ChipSelector
-            options={defaultInsurances}
+          <MultiSelectCombobox
+            options={insuranceOptions}
             selected={selectedInsurances}
             onChange={(values) => {
               setSelectedInsurances(values)
               handleChange()
             }}
-            allowCustom
-            customPlaceholder="Add custom insurance..."
+            placeholder="Select insurances..."
+            searchPlaceholder="Search insurances..."
           />
         </div>
 

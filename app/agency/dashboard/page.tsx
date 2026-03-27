@@ -11,19 +11,19 @@ export default function AgencyDashboardPage() {
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="h-screen flex flex-col bg-background overflow-hidden">
       <Header />
       <SidebarProvider>
-        <div className="flex flex-1">
+        <div className="flex flex-1 min-h-0">
           <AgencyDashboardSidebar />
-          <SidebarInset className="flex-1">
+          <SidebarInset className="flex-1 flex flex-col min-h-0">
             {/* Mobile header with sidebar trigger */}
-            <header className="flex h-14 items-center gap-2 border-b bg-background px-4 lg:hidden">
+            <header className="flex h-14 shrink-0 items-center gap-2 border-b bg-background px-4 lg:hidden">
               <SidebarTrigger className="-ml-2" />
               <Separator orientation="vertical" className="h-6" />
               <span className="font-semibold">Agency Profile</span>
             </header>
-            <div className="flex-1 overflow-auto">
+            <div className="flex-1 overflow-y-auto">
               <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-8">
                 <div className="mb-8 hidden lg:block">
                   <h1 className="text-2xl font-bold text-foreground">Agency Profile</h1>

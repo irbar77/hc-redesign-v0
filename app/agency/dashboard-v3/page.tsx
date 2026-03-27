@@ -34,9 +34,9 @@ export default function AgencyDashboardV3Page() {
     <div className="h-screen flex bg-sidebar overflow-hidden">
       <SidebarProvider>
         <AgencyDashboardSidebarV3 />
-        <SidebarInset className="flex-1 flex flex-col min-h-0 p-2 pl-0">
+        <SidebarInset className="flex-1 flex flex-col min-h-0">
           {/* Inset Content Panel */}
-          <div className="flex-1 flex flex-col bg-background rounded-xl shadow-sm border border-border/50 overflow-hidden">
+          <div className="flex-1 flex flex-col bg-background overflow-hidden">
             {/* Header inside the panel */}
             <header className="flex h-14 shrink-0 items-center justify-between gap-4 px-4 lg:px-6">
               <div className="flex items-center gap-2">

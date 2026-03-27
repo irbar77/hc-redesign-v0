@@ -111,8 +111,8 @@ export function HiringSection({
   }
 
   return (
-    <Card>
-      <CardHeader>
+    <Card className="border-0 shadow-none bg-card/50">
+      <CardHeader className="pb-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Briefcase className="h-5 w-5 text-primary" />

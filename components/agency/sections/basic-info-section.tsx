@@ -109,8 +109,8 @@ export function BasicInfoSection({ onChangesMade }: BasicInfoSectionProps) {
   }
 
   return (
-    <Card>
-      <CardHeader>
+    <Card className="border-0 shadow-none bg-card/50">
+      <CardHeader className="pb-4">
         <CardTitle className="flex items-center gap-2">
           <Building2 className="h-5 w-5 text-primary" />
           Basic Information

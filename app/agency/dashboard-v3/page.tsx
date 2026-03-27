@@ -6,14 +6,12 @@ import { AgencyDashboardSidebarV3 } from '@/components/agency/dashboard-sidebar-
 import { AgencyProfileForm } from '@/components/agency/profile-form'
 import { SidebarProvider, SidebarInset, SidebarTrigger } from '@/components/ui/sidebar'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Separator } from '@/components/ui/separator'
 import { ThemeToggle } from '@/components/theme-toggle'
 import {
   Bell,
   MessageCircle,
-  Search,
   Home,
 } from 'lucide-react'
 import {
@@ -40,7 +38,7 @@ export default function AgencyDashboardV3Page() {
           {/* Inset Content Panel */}
           <div className="flex-1 flex flex-col bg-background rounded-xl shadow-sm border border-border/50 overflow-hidden">
             {/* Header inside the panel */}
-            <header className="flex h-14 shrink-0 items-center justify-between gap-4 border-b px-4 lg:px-6">
+            <header className="flex h-14 shrink-0 items-center justify-between gap-4 px-4 lg:px-6">
               <div className="flex items-center gap-2">
                 {/* Mobile sidebar trigger */}
                 <SidebarTrigger className="-ml-2 lg:hidden" />
@@ -54,16 +52,6 @@ export default function AgencyDashboardV3Page() {
               </div>
 
               <div className="flex items-center gap-1">
-                {/* Search */}
-                <div className="hidden md:flex relative">
-                  <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    type="search"
-                    placeholder="Search..."
-                    className="w-48 lg:w-56 pl-9 h-8 text-sm"
-                  />
-                </div>
-
                 {/* Back to site */}
                 <Tooltip>
                   <TooltipTrigger asChild>

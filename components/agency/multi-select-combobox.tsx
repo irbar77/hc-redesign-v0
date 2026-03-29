@@ -86,7 +86,7 @@ export function MultiSelectCombobox({
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="w-full justify-between font-normal h-auto min-h-9 py-2 group"
+            className="w-full justify-between font-normal h-auto min-h-9 py-2 group bg-transparent"
           >
             <span className="text-muted-foreground truncate group-hover:text-accent-foreground">
               {selected.length > 0

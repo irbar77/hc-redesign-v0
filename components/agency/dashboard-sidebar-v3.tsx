@@ -72,7 +72,7 @@ export function AgencyDashboardSidebarV3() {
   const pathname = usePathname()
 
   return (
-    <Sidebar className="border-r-0 inset-y-0 h-svh bg-card">
+    <Sidebar className="border-r-0 inset-y-0 h-svh bg-sidebar">
       {/* Logo Section - same height as content header (h-14 = 56px) */}
       <SidebarHeader className="h-14 flex flex-col justify-center px-4 border-b border-border">
         <Link href="/" className="flex items-center gap-2 rounded-md hover:opacity-80 transition-opacity -mt-[14px]">

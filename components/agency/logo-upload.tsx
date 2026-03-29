@@ -27,7 +27,10 @@ export function LogoUpload({ currentLogo, onLogoChange }: LogoUploadProps) {
 
   return (
     <div className="flex items-center gap-4">
-      <Avatar className="h-20 w-20 rounded-lg">
+      <Avatar 
+        className="h-20 w-20 rounded-lg cursor-pointer hover:opacity-80 transition-opacity"
+        onClick={() => inputRef.current?.click()}
+      >
         {currentLogo ? (
           <AvatarImage src={currentLogo} alt="Agency logo" className="object-cover" />
         ) : (

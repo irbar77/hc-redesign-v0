@@ -26,6 +26,14 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb'
 
 export default function AgencyDashboardV3Page() {
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
@@ -127,6 +135,21 @@ export default function AgencyDashboardV3Page() {
             {/* Scrollable content */}
             <div className="flex-1 overflow-y-auto">
               <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-6">
+                <Breadcrumb className="mb-4 hidden lg:block">
+                  <BreadcrumbList>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                      <BreadcrumbLink href="/agency/dashboard">Account</BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                      <BreadcrumbPage>Profile</BreadcrumbPage>
+                    </BreadcrumbItem>
+                  </BreadcrumbList>
+                </Breadcrumb>
                 <AgencyProfileForm
                   onChangesMade={() => setHasUnsavedChanges(true)}
                   hasUnsavedChanges={hasUnsavedChanges}

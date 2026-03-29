@@ -111,7 +111,7 @@ export function HiringSection({
   }
 
   return (
-    <Card className="border-0 shadow-none bg-card/50">
+    <Card className="bg-white border-0 shadow-none rounded-xl">
       <CardHeader className="pb-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -149,7 +149,7 @@ export function HiringSection({
                 handleChange()
               }}
               placeholder="Select positions..."
-              searchPlaceholder="Search positions..."
+              searchPlaceholder="Найдите или добавьте свой..."
             />
           </div>
 
@@ -203,7 +203,7 @@ export function HiringSection({
                 handleChange()
               }}
               placeholder="Select benefits..."
-              searchPlaceholder="Search benefits..."
+              searchPlaceholder="Найдите или добавьте свой..."
             />
           </div>
 
@@ -218,7 +218,7 @@ export function HiringSection({
                 handleChange()
               }}
               placeholder="Select requirements..."
-              searchPlaceholder="Search requirements..."
+              searchPlaceholder="Найдите или добавьте свой..."
             />
           </div>
 
@@ -233,7 +233,7 @@ export function HiringSection({
                 handleChange()
               }}
               placeholder="Select documents..."
-              searchPlaceholder="Search documents..."
+              searchPlaceholder="Найдите или добавьте свой..."
             />
           </div>
 

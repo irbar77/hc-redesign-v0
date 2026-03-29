@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { Check, ChevronsUpDown, X, Search } from 'lucide-react'
+import { Check, ChevronsUpDown, X, Search, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import {
@@ -29,19 +29,25 @@ export function MultiSelectCombobox({
   selected,
   onChange,
   placeholder = 'Select items...',
-  searchPlaceholder = 'Search...',
+  searchPlaceholder = 'Найдите или добавьте свой...',
 }: MultiSelectComboboxProps) {
   const [open, setOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const filteredOptions = options.filter((option) =>
+  const [customOptions, setCustomOptions] = useState<Option[]>([])
+
+  const allOptions = [...options, ...customOptions]
+
+  const filteredOptions = allOptions.filter((option) =>
     option.label.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
   const selectedLabels = selected
-    .map((value) => options.find((opt) => opt.value === value)?.label)
+    .map((value) => allOptions.find((opt) => opt.value === value)?.label)
     .filter(Boolean)
+
+  const canCreate = searchQuery.length > 0 && !allOptions.some(opt => opt.label.toLowerCase() === searchQuery.toLowerCase())
 
   const toggleOption = (value: string) => {
     if (selected.includes(value)) {
@@ -49,6 +55,16 @@ export function MultiSelectCombobox({
     } else {
       onChange([...selected, value])
     }
+  }
+
+  const handleCreate = () => {
+    const newValue = searchQuery.toLowerCase().replace(/\s+/g, '-')
+    const newOption = { value: newValue, label: searchQuery }
+    setCustomOptions(prev => [...prev, newOption])
+    if (!selected.includes(newValue)) {
+      onChange([...selected, newValue])
+    }
+    setSearchQuery('')
   }
 
   const removeOption = (value: string, e: React.MouseEvent) => {
@@ -70,14 +86,14 @@ export function MultiSelectCombobox({
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="w-full justify-between font-normal h-auto min-h-9 py-2"
+            className="w-full justify-between font-normal h-auto min-h-9 py-2 group"
           >
-            <span className="text-muted-foreground truncate">
+            <span className="text-muted-foreground truncate group-hover:text-accent-foreground">
               {selected.length > 0
                 ? `${selected.length} selected`
                 : placeholder}
             </span>
-            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50 group-hover:text-accent-foreground group-hover:opacity-100" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0" align="start">
@@ -100,12 +116,12 @@ export function MultiSelectCombobox({
               filteredOptions.map((option) => {
                 const isSelected = selected.includes(option.value)
                 return (
-                  <button
+                  <div
                     key={option.value}
                     onClick={() => toggleOption(option.value)}
                     className={cn(
-                      'relative flex w-full cursor-pointer select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none hover:bg-accent hover:text-accent-foreground',
-                      isSelected && 'bg-accent/50'
+                      'relative flex w-full cursor-pointer select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors group hover:bg-primary hover:text-primary-foreground',
+                      isSelected ? 'bg-secondary text-secondary-foreground' : 'text-foreground'
                     )}
                   >
                     <span
@@ -114,12 +130,30 @@ export function MultiSelectCombobox({
                         isSelected ? 'opacity-100' : 'opacity-0'
                       )}
                     >
-                      <Check className="h-4 w-4 text-primary" />
+                      <Check className={cn(
+                        "h-4 w-4", 
+                        isSelected ? "text-primary group-hover:text-primary-foreground" : "text-transparent group-hover:text-primary-foreground"
+                      )} />
                     </span>
-                    {option.label}
-                  </button>
+                    <span className="truncate group-hover:text-primary-foreground">
+                      {option.label}
+                    </span>
+                  </div>
                 )
               })
+            )}
+            {canCreate && (
+              <div
+                onClick={handleCreate}
+                className="relative flex w-full cursor-pointer select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none hover:bg-primary hover:text-primary-foreground transition-colors mt-1 border-t border-border pt-2 group"
+              >
+                <span className="absolute left-2 flex h-4 w-4 items-center justify-center">
+                  <Plus className="h-4 w-4 text-muted-foreground group-hover:text-primary-foreground" />
+                </span>
+                <span className="text-muted-foreground group-hover:text-primary-foreground">Add &quot;</span>
+                <span className="font-medium group-hover:text-primary-foreground">{searchQuery}</span>
+                <span className="text-muted-foreground group-hover:text-primary-foreground">&quot;</span>
+              </div>
             )}
           </div>
         </PopoverContent>
@@ -129,7 +163,7 @@ export function MultiSelectCombobox({
       {selected.length > 0 && (
         <div className="flex flex-wrap gap-1.5">
           {selected.map((value) => {
-            const option = options.find((opt) => opt.value === value)
+            const option = allOptions.find((opt) => opt.value === value)
             if (!option) return null
             return (
               <Badge

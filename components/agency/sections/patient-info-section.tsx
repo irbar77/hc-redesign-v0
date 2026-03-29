@@ -103,7 +103,7 @@ export function PatientInfoSection({ onChangesMade }: PatientInfoSectionProps) {
   }
 
   return (
-    <Card className="border-0 shadow-none bg-card/50">
+    <Card className="bg-white border-0 shadow-none rounded-xl">
       <CardHeader className="pb-4">
         <CardTitle className="flex items-center gap-2">
           <HeartPulse className="h-5 w-5 text-primary" />
@@ -125,7 +125,7 @@ export function PatientInfoSection({ onChangesMade }: PatientInfoSectionProps) {
               handleChange()
             }}
             placeholder="Select insurances..."
-            searchPlaceholder="Search insurances..."
+            searchPlaceholder="Найдите или добавьте свой..."
           />
         </div>
 
@@ -140,7 +140,7 @@ export function PatientInfoSection({ onChangesMade }: PatientInfoSectionProps) {
               handleChange()
             }}
             placeholder="Select services..."
-            searchPlaceholder="Search services..."
+            searchPlaceholder="Найдите или добавьте свой..."
           />
         </div>
 
@@ -155,7 +155,7 @@ export function PatientInfoSection({ onChangesMade }: PatientInfoSectionProps) {
               handleChange()
             }}
             placeholder="Select counties..."
-            searchPlaceholder="Search counties..."
+            searchPlaceholder="Найдите или добавьте свой..."
           />
         </div>
       </CardContent>

@@ -49,13 +49,13 @@ import {
 } from '@/components/ui/dropdown-menu'
 
 const navigationItems = [
-  { title: 'Profile', icon: User, href: '/agency/dashboard-v3', isActive: true },
-  { title: 'Messages', icon: MessageCircle, href: '/agency/dashboard-v3/messages', badge: 3 },
-  { title: 'Favorites', icon: Heart, href: '/agency/dashboard-v3/favorites' },
-  { title: 'Jobs', icon: Briefcase, href: '/agency/dashboard-v3/jobs' },
-  { title: 'Notifications', icon: Bell, href: '/agency/dashboard-v3/notifications', badge: 5 },
-  { title: 'My Team', icon: Users, href: '/agency/dashboard-v3/team' },
-  { title: 'Settings', icon: Settings, href: '/agency/dashboard-v3/settings' },
+  { title: 'Profile', icon: User, href: '/agency/dashboard', isActive: true },
+  { title: 'Messages', icon: MessageCircle, href: '/agency/dashboard/messages', badge: 3 },
+  { title: 'Favorites', icon: Heart, href: '/agency/dashboard/favorites' },
+  { title: 'Jobs', icon: Briefcase, href: '/agency/dashboard/jobs' },
+  { title: 'Notifications', icon: Bell, href: '/agency/dashboard/notifications', badge: 5 },
+  { title: 'My Team', icon: Users, href: '/agency/dashboard/team' },
+  { title: 'Settings', icon: Settings, href: '/agency/dashboard/settings' },
 ]
 
 // Mock data - in real app this would come from API/context
@@ -72,17 +72,17 @@ export function AgencyDashboardSidebarV3() {
   const pathname = usePathname()
 
   return (
-    <Sidebar className="border-r-0 inset-y-0 h-svh bg-sidebar">
+    <Sidebar className="border-r-0 inset-y-0 h-svh bg-card">
       {/* Logo Section - same height as content header (h-14 = 56px) */}
-      <SidebarHeader className="h-14 flex items-center px-4 border-b border-border">
-        <Link href="/" className="flex items-center gap-2 rounded-md hover:opacity-80 transition-opacity ml-0.5">
+      <SidebarHeader className="h-14 flex flex-col justify-center px-4 border-b border-border">
+        <Link href="/" className="flex items-center gap-2 rounded-md hover:opacity-80 transition-opacity -mt-[14px]">
           <span className="text-xl font-semibold text-foreground tracking-tight">
             hcz<MapPin className="inline-block h-5 w-5 -mx-0.5 text-primary" strokeWidth={2.5} />p<span className="text-primary">.com</span>
           </span>
         </Link>
       </SidebarHeader>
 
-      <SidebarHeader className="px-4 py-3">
+      <SidebarHeader className="px-2 py-3">
         {/* Agency Account Dropdown */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -113,7 +113,7 @@ export function AgencyDashboardSidebarV3() {
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href="/agency/dashboard-v3/settings" className="flex items-center gap-2">
+              <Link href="/agency/dashboard/settings" className="flex items-center gap-2">
                 <Settings className="h-4 w-4" />
                 Account Settings
               </Link>
@@ -126,30 +126,28 @@ export function AgencyDashboardSidebarV3() {
           </DropdownMenuContent>
         </DropdownMenu>
 
-        {/* Status Badges */}
-        <div className="mt-2 flex flex-wrap gap-1.5">
-          {agencyData.isPremium && (
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Badge variant="outline" className="bg-amber-500/10 text-amber-600 border-amber-500/30 text-[10px] px-1.5 py-0">
-                  <Crown className="h-2.5 w-2.5 mr-0.5" />
-                  Premium
-                </Badge>
-              </TooltipTrigger>
-              <TooltipContent>Premium account with extra features</TooltipContent>
-            </Tooltip>
-          )}
-          {agencyData.isVerified && (
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Badge variant="outline" className="bg-primary/10 text-primary border-primary/30 text-[10px] px-1.5 py-0">
-                  <BadgeCheck className="h-2.5 w-2.5 mr-0.5" />
-                  Verified
-                </Badge>
-              </TooltipTrigger>
-              <TooltipContent>Verified agency</TooltipContent>
-            </Tooltip>
-          )}
+        {/* Status Info List */}
+        <div className="mt-4 mx-2 rounded-xl bg-muted/30 p-3 flex flex-col gap-2.5 border border-border/50">
+          <div className="flex items-center justify-between text-[10px] uppercase tracking-wider font-semibold">
+            <span className="text-muted-foreground">Subscription:</span>
+            <span className={agencyData.isPremium ? 'text-yellow-600 dark:text-yellow-500' : 'text-sidebar-foreground'}>
+              {agencyData.isPremium ? 'Premium' : 'Basic'}
+            </span>
+          </div>
+          <div className="h-px bg-border/50 w-full" />
+          <div className="flex items-center justify-between text-[10px] uppercase tracking-wider font-semibold">
+            <span className="text-muted-foreground">Status:</span>
+            <span className={agencyData.isVerified ? 'text-emerald-600 dark:text-emerald-500' : 'text-sidebar-foreground'}>
+              {agencyData.isVerified ? 'Verified' : 'Standard'}
+            </span>
+          </div>
+          <div className="h-px bg-border/50 w-full" />
+          <div className="flex items-center justify-between text-[10px] uppercase tracking-wider font-semibold">
+            <span className="text-muted-foreground">Credits:</span>
+            <span className="text-sidebar-foreground">
+              {agencyData.credits}
+            </span>
+          </div>
         </div>
       </SidebarHeader>
 
@@ -189,43 +187,6 @@ export function AgencyDashboardSidebarV3() {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {/* Stats Section */}
-        <SidebarGroup className="mt-auto">
-          <SidebarGroupLabel className="px-2 text-xs">Stats</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <div className="px-2 space-y-2">
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div className="flex items-center justify-between p-2 rounded-md bg-sidebar-accent/50">
-                    <div className="flex items-center gap-2">
-                      <Coins className="h-4 w-4 text-muted-foreground" />
-                      <span className="text-xs text-muted-foreground">Credits</span>
-                    </div>
-                    <span className="text-sm font-semibold text-sidebar-foreground">
-                      {agencyData.credits}
-                    </span>
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent>Available credits for premium features</TooltipContent>
-              </Tooltip>
-
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div className="flex items-center justify-between p-2 rounded-md bg-sidebar-accent/50">
-                    <div className="flex items-center gap-2">
-                      <FolderOpen className="h-4 w-4 text-muted-foreground" />
-                      <span className="text-xs text-muted-foreground">Open Cases</span>
-                    </div>
-                    <span className="text-sm font-semibold text-sidebar-foreground">
-                      {agencyData.openCases}
-                    </span>
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent>Active open cases</TooltipContent>
-              </Tooltip>
-            </div>
-          </SidebarGroupContent>
-        </SidebarGroup>
       </SidebarContent>
 
       <SidebarFooter className="p-4 pt-2">

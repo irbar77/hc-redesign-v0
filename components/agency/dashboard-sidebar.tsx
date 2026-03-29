@@ -82,66 +82,29 @@ export function AgencyDashboardSidebar() {
           </div>
         </div>
 
-        {/* Status Badges */}
-        <div className="mt-4 flex flex-wrap gap-2">
-          {agencyData.isPremium && (
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Badge className="bg-amber-500/10 text-amber-600 border-amber-500/20 hover:bg-amber-500/20">
-                  <Crown className="h-3 w-3 mr-1" />
-                  Premium
-                </Badge>
-              </TooltipTrigger>
-              <TooltipContent>Premium account with extra features</TooltipContent>
-            </Tooltip>
-          )}
-          {agencyData.isVerified && (
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Badge className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20">
-                  <BadgeCheck className="h-3 w-3 mr-1" />
-                  Verified
-                </Badge>
-              </TooltipTrigger>
-              <TooltipContent>Verified agency</TooltipContent>
-            </Tooltip>
-          )}
+        {/* Status Info List */}
+        <div className="mt-4 space-y-1.5 px-0.5">
+          <div className="flex items-center justify-between text-[11px] uppercase tracking-wider font-medium">
+            <span className="text-muted-foreground">Subscription:</span>
+            <span className="text-sidebar-foreground">
+              {agencyData.isPremium ? 'Premium' : 'Basic'}
+            </span>
+          </div>
+          <div className="flex items-center justify-between text-[11px] uppercase tracking-wider font-medium">
+            <span className="text-muted-foreground">Status:</span>
+            <span className="text-sidebar-foreground">
+              {agencyData.isVerified ? 'Verified' : 'Standard'}
+            </span>
+          </div>
+          <div className="flex items-center justify-between text-[11px] uppercase tracking-wider font-medium">
+            <span className="text-muted-foreground">Credits:</span>
+            <span className="text-sidebar-foreground">
+              {agencyData.credits}
+            </span>
+          </div>
         </div>
 
         <Separator className="mt-4" />
-
-        {/* Stats */}
-        <div className="mt-4 grid grid-cols-2 gap-3">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div className="flex items-center gap-2 p-2 rounded-lg bg-sidebar-accent/50">
-                <Coins className="h-4 w-4 text-muted-foreground" />
-                <div>
-                  <p className="text-xs text-muted-foreground">Credits</p>
-                  <p className="text-sm font-semibold text-sidebar-foreground">
-                    {agencyData.credits}
-                  </p>
-                </div>
-              </div>
-            </TooltipTrigger>
-            <TooltipContent>Available credits for premium features</TooltipContent>
-          </Tooltip>
-
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div className="flex items-center gap-2 p-2 rounded-lg bg-sidebar-accent/50">
-                <FolderOpen className="h-4 w-4 text-muted-foreground" />
-                <div>
-                  <p className="text-xs text-muted-foreground">Open Cases</p>
-                  <p className="text-sm font-semibold text-sidebar-foreground">
-                    {agencyData.openCases}
-                  </p>
-                </div>
-              </div>
-            </TooltipTrigger>
-            <TooltipContent>Active open cases</TooltipContent>
-          </Tooltip>
-        </div>
       </SidebarHeader>
 
       <SidebarContent>

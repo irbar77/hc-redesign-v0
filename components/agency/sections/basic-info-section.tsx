@@ -109,7 +109,7 @@ export function BasicInfoSection({ onChangesMade }: BasicInfoSectionProps) {
   }
 
   return (
-    <Card className="border-0 shadow-none bg-card/50">
+    <Card className="bg-white border-0 shadow-none rounded-xl">
       <CardHeader className="pb-4">
         <CardTitle className="flex items-center gap-2">
           <Building2 className="h-5 w-5 text-primary" />
@@ -338,7 +338,7 @@ export function BasicInfoSection({ onChangesMade }: BasicInfoSectionProps) {
               handleChange()
             }}
             placeholder="Select services..."
-            searchPlaceholder="Search services..."
+            searchPlaceholder="Найдите или добавьте свой..."
           />
         </div>
 
@@ -353,7 +353,7 @@ export function BasicInfoSection({ onChangesMade }: BasicInfoSectionProps) {
               handleChange()
             }}
             placeholder="Select languages..."
-            searchPlaceholder="Search languages..."
+            searchPlaceholder="Найдите или добавьте свой..."
           />
         </div>
       </CardContent>

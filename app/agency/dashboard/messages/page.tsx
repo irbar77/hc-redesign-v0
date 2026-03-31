@@ -1,21 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
-import { AgencyDashboardSidebarV3 } from '@/components/agency/dashboard-sidebar-v3'
-import { SidebarProvider, SidebarInset, SidebarTrigger } from '@/components/ui/sidebar'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
-import { Separator } from '@/components/ui/separator'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Textarea } from '@/components/ui/textarea'
-import { ThemeToggle } from '@/components/theme-toggle'
 import {
-  Bell,
-  MessageCircle,
-  Home,
   Search,
   Send,
   Paperclip,
@@ -26,6 +18,7 @@ import {
   Check,
   CheckCheck,
   Clock,
+  MessageCircle,
 } from 'lucide-react'
 import {
   DropdownMenu,
@@ -39,137 +32,26 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import {
-  Breadcrumb,
-  BreadcrumbList,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb'
 
 // Mock data for conversations
 const conversations = [
-  {
-    id: '1',
-    name: 'Maria Rodriguez',
-    avatar: null,
-    role: 'HHA Caregiver',
-    lastMessage: 'Thank you for the opportunity! I am very interested in the position.',
-    timestamp: '2 min ago',
-    unread: 2,
-    online: true,
-  },
-  {
-    id: '2',
-    name: 'James Wilson',
-    avatar: null,
-    role: 'PCA Caregiver',
-    lastMessage: 'When would be a good time for an interview?',
-    timestamp: '15 min ago',
-    unread: 1,
-    online: true,
-  },
-  {
-    id: '3',
-    name: 'Sarah Chen',
-    avatar: null,
-    role: 'CNA Caregiver',
-    lastMessage: 'I have sent you my updated certifications.',
-    timestamp: '1 hour ago',
-    unread: 0,
-    online: false,
-  },
-  {
-    id: '4',
-    name: 'Michael Brown',
-    avatar: null,
-    role: 'HHA Caregiver',
-    lastMessage: 'Yes, I am available to start next Monday.',
-    timestamp: '3 hours ago',
-    unread: 0,
-    online: false,
-  },
-  {
-    id: '5',
-    name: 'Emily Davis',
-    avatar: null,
-    role: 'PCA Caregiver',
-    lastMessage: 'Could you please provide more details about the case?',
-    timestamp: 'Yesterday',
-    unread: 0,
-    online: true,
-  },
-  {
-    id: '6',
-    name: 'Robert Johnson',
-    avatar: null,
-    role: 'CNA Caregiver',
-    lastMessage: 'I have 5 years of experience with Alzheimer patients.',
-    timestamp: 'Yesterday',
-    unread: 0,
-    online: false,
-  },
+  { id: '1', name: 'Maria Rodriguez', avatar: null, role: 'HHA Caregiver', lastMessage: 'Thank you for the opportunity! I am very interested in the position.', timestamp: '2 min ago', unread: 2, online: true },
+  { id: '2', name: 'James Wilson', avatar: null, role: 'PCA Caregiver', lastMessage: 'When would be a good time for an interview?', timestamp: '15 min ago', unread: 1, online: true },
+  { id: '3', name: 'Sarah Chen', avatar: null, role: 'CNA Caregiver', lastMessage: 'I have sent you my updated certifications.', timestamp: '1 hour ago', unread: 0, online: false },
+  { id: '4', name: 'Michael Brown', avatar: null, role: 'HHA Caregiver', lastMessage: 'Yes, I am available to start next Monday.', timestamp: '3 hours ago', unread: 0, online: false },
+  { id: '5', name: 'Emily Davis', avatar: null, role: 'PCA Caregiver', lastMessage: 'Could you please provide more details about the case?', timestamp: 'Yesterday', unread: 0, online: true },
+  { id: '6', name: 'Robert Johnson', avatar: null, role: 'CNA Caregiver', lastMessage: 'I have 5 years of experience with Alzheimer patients.', timestamp: 'Yesterday', unread: 0, online: false },
 ]
 
-// Mock messages for selected conversation
 const mockMessages = [
-  {
-    id: '1',
-    senderId: 'them',
-    text: 'Hello! I saw your job posting for a Home Health Aide position.',
-    timestamp: '10:30 AM',
-    status: 'read',
-  },
-  {
-    id: '2',
-    senderId: 'them',
-    text: 'I have 3 years of experience and all required certifications.',
-    timestamp: '10:31 AM',
-    status: 'read',
-  },
-  {
-    id: '3',
-    senderId: 'me',
-    text: 'Hi Maria! Thank you for reaching out. We are very interested in your profile.',
-    timestamp: '10:45 AM',
-    status: 'read',
-  },
-  {
-    id: '4',
-    senderId: 'me',
-    text: 'Could you tell me more about your experience with elderly patients?',
-    timestamp: '10:46 AM',
-    status: 'read',
-  },
-  {
-    id: '5',
-    senderId: 'them',
-    text: 'Of course! I have worked with elderly patients for the past 3 years. I specialize in mobility assistance, medication reminders, and companionship care.',
-    timestamp: '11:00 AM',
-    status: 'read',
-  },
-  {
-    id: '6',
-    senderId: 'them',
-    text: 'I also have experience with dementia and Alzheimer patients.',
-    timestamp: '11:01 AM',
-    status: 'read',
-  },
-  {
-    id: '7',
-    senderId: 'me',
-    text: 'That sounds great! We have a case that might be perfect for you.',
-    timestamp: '11:15 AM',
-    status: 'delivered',
-  },
-  {
-    id: '8',
-    senderId: 'them',
-    text: 'Thank you for the opportunity! I am very interested in the position.',
-    timestamp: '11:20 AM',
-    status: 'read',
-  },
+  { id: '1', senderId: 'them', text: 'Hello! I saw your job posting for a Home Health Aide position.', timestamp: '10:30 AM', status: 'read' },
+  { id: '2', senderId: 'them', text: 'I have 3 years of experience and all required certifications.', timestamp: '10:31 AM', status: 'read' },
+  { id: '3', senderId: 'me', text: 'Hi Maria! Thank you for reaching out. We are very interested in your profile.', timestamp: '10:45 AM', status: 'read' },
+  { id: '4', senderId: 'me', text: 'Could you tell me more about your experience with elderly patients?', timestamp: '10:46 AM', status: 'read' },
+  { id: '5', senderId: 'them', text: 'Of course! I have worked with elderly patients for the past 3 years. I specialize in mobility assistance, medication reminders, and companionship care.', timestamp: '11:00 AM', status: 'read' },
+  { id: '6', senderId: 'them', text: 'I also have experience with dementia and Alzheimer patients.', timestamp: '11:01 AM', status: 'read' },
+  { id: '7', senderId: 'me', text: 'That sounds great! We have a case that might be perfect for you.', timestamp: '11:15 AM', status: 'delivered' },
+  { id: '8', senderId: 'them', text: 'Thank you for the opportunity! I am very interested in the position.', timestamp: '11:20 AM', status: 'read' },
 ]
 
 export default function AgencyMessagesPage() {
@@ -187,7 +69,6 @@ export default function AgencyMessagesPage() {
 
   const handleSendMessage = () => {
     if (newMessage.trim()) {
-      // In real app, send message to API
       setNewMessage('')
     }
   }
@@ -198,323 +79,181 @@ export default function AgencyMessagesPage() {
   }
 
   return (
-    <div className="h-screen flex bg-background overflow-hidden">
-      <SidebarProvider>
-        <AgencyDashboardSidebarV3 />
-        <SidebarInset className="flex-1 flex flex-col min-h-0 border-l border-border/50">
-          <div className="flex-1 flex flex-col bg-background overflow-hidden">
-            {/* Header */}
-            <header className="flex h-14 shrink-0 items-center justify-between gap-4 px-4 lg:px-6 border-b border-border">
-              <div className="flex items-center gap-2">
-                <SidebarTrigger className="-ml-2 lg:hidden" />
-                <Separator orientation="vertical" className="h-6 lg:hidden" />
+    <div className="flex-1 flex overflow-hidden -mt-0">
+      {/* Conversations List */}
+      <div className={`w-full md:w-80 lg:w-96 border-r border-border flex flex-col ${showMobileChat ? 'hidden md:flex' : 'flex'}`}>
+        {/* Search */}
+        <div className="p-3 border-b border-border">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Search conversations..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-9 h-9 bg-muted/50"
+            />
+          </div>
+        </div>
+
+        {/* Conversation List */}
+        <ScrollArea className="flex-1">
+          <div className="py-1">
+            {filteredConversations.map((conv) => (
+              <button
+                key={conv.id}
+                onClick={() => handleSelectConversation(conv.id)}
+                className={`w-full flex items-start gap-3 p-3 hover:bg-muted/50 transition-colors text-left ${
+                  selectedConversation === conv.id ? 'bg-muted' : ''
+                }`}
+              >
+                <div className="relative shrink-0">
+                  <Avatar className="h-10 w-10">
+                    <AvatarImage src={conv.avatar || ''} alt={conv.name} />
+                    <AvatarFallback className="bg-primary/10 text-primary text-sm">
+                      {conv.name.split(' ').map(n => n[0]).join('')}
+                    </AvatarFallback>
+                  </Avatar>
+                  {conv.online && (
+                    <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-emerald-500 border-2 border-background" />
+                  )}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="font-medium text-sm text-foreground truncate">{conv.name}</span>
+                    <span className="text-[11px] text-muted-foreground shrink-0">{conv.timestamp}</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground truncate">{conv.role}</p>
+                  <p className="text-sm text-muted-foreground truncate mt-0.5">{conv.lastMessage}</p>
+                </div>
+                {conv.unread > 0 && (
+                  <Badge variant="default" className="h-5 min-w-5 px-1.5 text-[10px] shrink-0">
+                    {conv.unread}
+                  </Badge>
+                )}
+              </button>
+            ))}
+          </div>
+        </ScrollArea>
+      </div>
+
+      {/* Chat Area */}
+      <div className={`flex-1 flex flex-col ${showMobileChat ? 'flex' : 'hidden md:flex'}`}>
+        {selectedChat ? (
+          <>
+            {/* Chat Header */}
+            <div className="flex items-center justify-between gap-3 px-4 py-3 border-b border-border">
+              <div className="flex items-center gap-3">
+                <Button variant="ghost" size="icon" className="h-8 w-8 md:hidden" onClick={() => setShowMobileChat(false)}>
+                  <ChevronLeft className="h-5 w-5" />
+                </Button>
+                <div className="relative">
+                  <Avatar className="h-9 w-9">
+                    <AvatarImage src={selectedChat.avatar || ''} alt={selectedChat.name} />
+                    <AvatarFallback className="bg-primary/10 text-primary text-sm">
+                      {selectedChat.name.split(' ').map(n => n[0]).join('')}
+                    </AvatarFallback>
+                  </Avatar>
+                  {selectedChat.online && (
+                    <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-500 border-2 border-background" />
+                  )}
+                </div>
                 <div>
-                  <h1 className="text-base font-semibold text-foreground">Messages</h1>
-                  <p className="text-xs text-muted-foreground hidden sm:block">Chat with caregivers and candidates</p>
+                  <p className="font-medium text-sm text-foreground">{selectedChat.name}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {selectedChat.online ? 'Online' : 'Offline'} · {selectedChat.role}
+                  </p>
                 </div>
               </div>
-
               <div className="flex items-center gap-1">
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button variant="ghost" size="icon" asChild className="h-8 w-8 hidden sm:flex">
-                      <Link href="/">
-                        <Home className="h-4 w-4" />
-                        <span className="sr-only">Back to site</span>
-                      </Link>
-                    </Button>
+                    <Button variant="ghost" size="icon" className="h-8 w-8 hidden sm:flex"><Phone className="h-4 w-4" /></Button>
                   </TooltipTrigger>
-                  <TooltipContent>Back to main site</TooltipContent>
+                  <TooltipContent>Call</TooltipContent>
                 </Tooltip>
-
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button variant="ghost" size="icon" className="h-8 w-8 relative">
-                      <MessageCircle className="h-4 w-4" />
-                      <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-primary text-[10px] font-medium text-primary-foreground flex items-center justify-center border-2 border-background">
-                        3
-                      </span>
-                    </Button>
+                    <Button variant="ghost" size="icon" className="h-8 w-8 hidden sm:flex"><Video className="h-4 w-4" /></Button>
                   </TooltipTrigger>
-                  <TooltipContent>Messages</TooltipContent>
+                  <TooltipContent>Video Call</TooltipContent>
                 </Tooltip>
-
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button variant="ghost" size="icon" className="h-8 w-8 relative">
-                      <Bell className="h-4 w-4" />
-                      <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-primary text-[10px] font-medium text-primary-foreground flex items-center justify-center border-2 border-background">
-                        5
-                      </span>
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>Notifications</TooltipContent>
-                </Tooltip>
-
-                <Separator orientation="vertical" className="h-6 mx-1" />
-                <ThemeToggle />
-
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon" className="rounded-full h-8 w-8">
-                      <Avatar className="h-7 w-7">
-                        <AvatarImage src="" alt="User" />
-                        <AvatarFallback className="bg-primary/10 text-primary text-xs">SC</AvatarFallback>
-                      </Avatar>
-                    </Button>
+                    <Button variant="ghost" size="icon" className="h-8 w-8"><MoreVertical className="h-4 w-4" /></Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-48">
-                    <DropdownMenuItem asChild>
-                      <Link href="/agency/dashboard">My Profile</Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link href="/agency/dashboard/settings">Settings</Link>
-                    </DropdownMenuItem>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem>View Profile</DropdownMenuItem>
+                    <DropdownMenuItem>Search in Conversation</DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem className="text-destructive focus:text-destructive">Log out</DropdownMenuItem>
+                    <DropdownMenuItem>Mute Notifications</DropdownMenuItem>
+                    <DropdownMenuItem className="text-destructive">Block User</DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
-            </header>
-            
-            {/* Messages Content */}
-            <div className="flex-1 flex overflow-hidden">
-              {/* Conversations List */}
-              <div className={`w-full md:w-80 lg:w-96 border-r border-border flex flex-col ${showMobileChat ? 'hidden md:flex' : 'flex'}`}>
-                {/* Search */}
-                <div className="p-3 border-b border-border">
-                  <div className="relative">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      placeholder="Search conversations..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="pl-9 h-9 bg-muted/50"
-                    />
-                  </div>
-                </div>
+            </div>
 
-                {/* Breadcrumbs */}
-                <div className="px-3 py-2 hidden lg:block">
-                  <Breadcrumb>
-                    <BreadcrumbList>
-                      <BreadcrumbItem>
-                        <BreadcrumbLink href="/">Home</BreadcrumbLink>
-                      </BreadcrumbItem>
-                      <BreadcrumbSeparator />
-                      <BreadcrumbItem>
-                        <BreadcrumbLink href="/agency/dashboard">Account</BreadcrumbLink>
-                      </BreadcrumbItem>
-                      <BreadcrumbSeparator />
-                      <BreadcrumbItem>
-                        <BreadcrumbPage>Messages</BreadcrumbPage>
-                      </BreadcrumbItem>
-                    </BreadcrumbList>
-                  </Breadcrumb>
-                </div>
-
-                {/* Conversation List */}
-                <ScrollArea className="flex-1">
-                  <div className="py-1">
-                    {filteredConversations.map((conv) => (
-                      <button
-                        key={conv.id}
-                        onClick={() => handleSelectConversation(conv.id)}
-                        className={`w-full flex items-start gap-3 p-3 hover:bg-muted/50 transition-colors text-left ${
-                          selectedConversation === conv.id ? 'bg-muted' : ''
-                        }`}
-                      >
-                        <div className="relative shrink-0">
-                          <Avatar className="h-10 w-10">
-                            <AvatarImage src={conv.avatar || ''} alt={conv.name} />
-                            <AvatarFallback className="bg-primary/10 text-primary text-sm">
-                              {conv.name.split(' ').map(n => n[0]).join('')}
-                            </AvatarFallback>
-                          </Avatar>
-                          {conv.online && (
-                            <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-emerald-500 border-2 border-background" />
-                          )}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center justify-between gap-2">
-                            <span className="font-medium text-sm text-foreground truncate">{conv.name}</span>
-                            <span className="text-[11px] text-muted-foreground shrink-0">{conv.timestamp}</span>
-                          </div>
-                          <p className="text-xs text-muted-foreground truncate">{conv.role}</p>
-                          <p className="text-sm text-muted-foreground truncate mt-0.5">{conv.lastMessage}</p>
-                        </div>
-                        {conv.unread > 0 && (
-                          <Badge variant="default" className="h-5 min-w-5 px-1.5 text-[10px] shrink-0">
-                            {conv.unread}
-                          </Badge>
+            {/* Messages */}
+            <ScrollArea className="flex-1 p-4">
+              <div className="space-y-4 max-w-2xl mx-auto">
+                {mockMessages.map((message) => (
+                  <div key={message.id} className={`flex ${message.senderId === 'me' ? 'justify-end' : 'justify-start'}`}>
+                    <div className={`max-w-[75%] rounded-2xl px-4 py-2 ${
+                      message.senderId === 'me'
+                        ? 'bg-primary text-primary-foreground rounded-br-md'
+                        : 'bg-muted text-foreground rounded-bl-md'
+                    }`}>
+                      <p className="text-sm">{message.text}</p>
+                      <div className={`flex items-center gap-1 mt-1 ${message.senderId === 'me' ? 'justify-end' : 'justify-start'}`}>
+                        <span className={`text-[10px] ${message.senderId === 'me' ? 'text-primary-foreground/70' : 'text-muted-foreground'}`}>
+                          {message.timestamp}
+                        </span>
+                        {message.senderId === 'me' && (
+                          <span className="text-primary-foreground/70">
+                            {message.status === 'read' ? <CheckCheck className="h-3 w-3" /> : message.status === 'delivered' ? <Check className="h-3 w-3" /> : <Clock className="h-3 w-3" />}
+                          </span>
                         )}
-                      </button>
-                    ))}
+                      </div>
+                    </div>
                   </div>
-                </ScrollArea>
+                ))}
               </div>
+            </ScrollArea>
 
-              {/* Chat Area */}
-              <div className={`flex-1 flex flex-col ${showMobileChat ? 'flex' : 'hidden md:flex'}`}>
-                {selectedChat ? (
-                  <>
-                    {/* Chat Header */}
-                    <div className="flex items-center justify-between gap-3 px-4 py-3 border-b border-border">
-                      <div className="flex items-center gap-3">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8 md:hidden"
-                          onClick={() => setShowMobileChat(false)}
-                        >
-                          <ChevronLeft className="h-5 w-5" />
-                        </Button>
-                        <div className="relative">
-                          <Avatar className="h-9 w-9">
-                            <AvatarImage src={selectedChat.avatar || ''} alt={selectedChat.name} />
-                            <AvatarFallback className="bg-primary/10 text-primary text-sm">
-                              {selectedChat.name.split(' ').map(n => n[0]).join('')}
-                            </AvatarFallback>
-                          </Avatar>
-                          {selectedChat.online && (
-                            <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-500 border-2 border-background" />
-                          )}
-                        </div>
-                        <div>
-                          <p className="font-medium text-sm text-foreground">{selectedChat.name}</p>
-                          <p className="text-xs text-muted-foreground">
-                            {selectedChat.online ? 'Online' : 'Offline'} · {selectedChat.role}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-8 w-8 hidden sm:flex">
-                              <Phone className="h-4 w-4" />
-                            </Button>
-                          </TooltipTrigger>
-                          <TooltipContent>Call</TooltipContent>
-                        </Tooltip>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-8 w-8 hidden sm:flex">
-                              <Video className="h-4 w-4" />
-                            </Button>
-                          </TooltipTrigger>
-                          <TooltipContent>Video Call</TooltipContent>
-                        </Tooltip>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-8 w-8">
-                              <MoreVertical className="h-4 w-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuItem>View Profile</DropdownMenuItem>
-                            <DropdownMenuItem>Search in Conversation</DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>Mute Notifications</DropdownMenuItem>
-                            <DropdownMenuItem className="text-destructive">Block User</DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </div>
-                    </div>
-
-                    {/* Messages */}
-                    <ScrollArea className="flex-1 p-4">
-                      <div className="space-y-4 max-w-2xl mx-auto">
-                        {mockMessages.map((message) => (
-                          <div
-                            key={message.id}
-                            className={`flex ${message.senderId === 'me' ? 'justify-end' : 'justify-start'}`}
-                          >
-                            <div
-                              className={`max-w-[75%] rounded-2xl px-4 py-2 ${
-                                message.senderId === 'me'
-                                  ? 'bg-primary text-primary-foreground rounded-br-md'
-                                  : 'bg-muted text-foreground rounded-bl-md'
-                              }`}
-                            >
-                              <p className="text-sm">{message.text}</p>
-                              <div className={`flex items-center gap-1 mt-1 ${
-                                message.senderId === 'me' ? 'justify-end' : 'justify-start'
-                              }`}>
-                                <span className={`text-[10px] ${
-                                  message.senderId === 'me' ? 'text-primary-foreground/70' : 'text-muted-foreground'
-                                }`}>
-                                  {message.timestamp}
-                                </span>
-                                {message.senderId === 'me' && (
-                                  <span className="text-primary-foreground/70">
-                                    {message.status === 'read' ? (
-                                      <CheckCheck className="h-3 w-3" />
-                                    ) : message.status === 'delivered' ? (
-                                      <Check className="h-3 w-3" />
-                                    ) : (
-                                      <Clock className="h-3 w-3" />
-                                    )}
-                                  </span>
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </ScrollArea>
-
-                    {/* Message Input */}
-                    <div className="p-4 border-t border-border">
-                      <div className="flex items-end gap-2 max-w-2xl mx-auto">
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-9 w-9 shrink-0">
-                              <Paperclip className="h-4 w-4" />
-                            </Button>
-                          </TooltipTrigger>
-                          <TooltipContent>Attach file</TooltipContent>
-                        </Tooltip>
-                        <Textarea
-                          placeholder="Type your message..."
-                          value={newMessage}
-                          onChange={(e) => setNewMessage(e.target.value)}
-                          onKeyDown={(e) => {
-                            if (e.key === 'Enter' && !e.shiftKey) {
-                              e.preventDefault()
-                              handleSendMessage()
-                            }
-                          }}
-                          className="min-h-[40px] max-h-32 resize-none"
-                          rows={1}
-                        />
-                        <Button
-                          size="icon"
-                          className="h-9 w-9 shrink-0"
-                          onClick={handleSendMessage}
-                          disabled={!newMessage.trim()}
-                        >
-                          <Send className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  /* No Chat Selected State */
-                  <div className="flex-1 flex items-center justify-center">
-                    <div className="text-center">
-                      <div className="h-16 w-16 rounded-full bg-muted flex items-center justify-center mx-auto mb-4">
-                        <MessageCircle className="h-8 w-8 text-muted-foreground" />
-                      </div>
-                      <h3 className="font-medium text-foreground mb-1">No conversation selected</h3>
-                      <p className="text-sm text-muted-foreground">Choose a conversation from the list to start messaging</p>
-                    </div>
-                  </div>
-                )}
+            {/* Message Input */}
+            <div className="p-4 border-t border-border">
+              <div className="flex items-end gap-2 max-w-2xl mx-auto">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button variant="ghost" size="icon" className="h-9 w-9 shrink-0"><Paperclip className="h-4 w-4" /></Button>
+                  </TooltipTrigger>
+                  <TooltipContent>Attach file</TooltipContent>
+                </Tooltip>
+                <Textarea
+                  placeholder="Type your message..."
+                  value={newMessage}
+                  onChange={(e) => setNewMessage(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSendMessage() } }}
+                  className="min-h-[40px] max-h-32 resize-none"
+                  rows={1}
+                />
+                <Button size="icon" className="h-9 w-9 shrink-0" onClick={handleSendMessage} disabled={!newMessage.trim()}>
+                  <Send className="h-4 w-4" />
+                </Button>
               </div>
             </div>
+          </>
+        ) : (
+          <div className="flex-1 flex items-center justify-center">
+            <div className="text-center">
+              <div className="h-16 w-16 rounded-full bg-muted flex items-center justify-center mx-auto mb-4">
+                <MessageCircle className="h-8 w-8 text-muted-foreground" />
+              </div>
+              <h3 className="font-medium text-foreground mb-1">No conversation selected</h3>
+              <p className="text-sm text-muted-foreground">Choose a conversation from the list to start messaging</p>
+            </div>
           </div>
-        </SidebarInset>
-      </SidebarProvider>
+        )}
+      </div>
     </div>
   )
 }

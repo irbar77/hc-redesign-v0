@@ -5,18 +5,21 @@ import { BasicInfoSection } from './sections/basic-info-section'
 import { HiringSection } from './sections/hiring-section'
 import { PatientInfoSection } from './sections/patient-info-section'
 import { Button } from '@/components/ui/button'
-import { Save } from 'lucide-react'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Save, Building2, Briefcase, HeartPulse } from 'lucide-react'
 
 interface AgencyProfileFormProps {
   onChangesMade: () => void
   hasUnsavedChanges: boolean
   onSave: () => void
+  defaultTab?: string
 }
 
 export function AgencyProfileForm({
   onChangesMade,
   hasUnsavedChanges,
   onSave,
+  defaultTab = 'basic-info',
 }: AgencyProfileFormProps) {
   const [isHiring, setIsHiring] = useState(true)
 
@@ -27,22 +30,42 @@ export function AgencyProfileForm({
   }
 
   return (
-    <div className="space-y-6 pb-24">
-      {/* Section 1: Basic Information */}
-      <BasicInfoSection onChangesMade={onChangesMade} />
+    <div className="pb-24">
+      <Tabs defaultValue={defaultTab} className="space-y-6">
+        <TabsList className="grid w-full grid-cols-3 lg:w-auto lg:inline-flex">
+          <TabsTrigger value="basic-info" className="gap-2">
+            <Building2 className="h-4 w-4 hidden sm:inline" />
+            Basic Info
+          </TabsTrigger>
+          <TabsTrigger value="hiring" className="gap-2">
+            <Briefcase className="h-4 w-4 hidden sm:inline" />
+            Hiring
+          </TabsTrigger>
+          <TabsTrigger value="patient-services" className="gap-2">
+            <HeartPulse className="h-4 w-4 hidden sm:inline" />
+            Patient Services
+          </TabsTrigger>
+        </TabsList>
 
-      {/* Section 2: Hiring (conditional) */}
-      <HiringSection
-        isHiring={isHiring}
-        onHiringChange={(value) => {
-          setIsHiring(value)
-          onChangesMade()
-        }}
-        onChangesMade={onChangesMade}
-      />
+        <TabsContent value="basic-info">
+          <BasicInfoSection onChangesMade={onChangesMade} />
+        </TabsContent>
 
-      {/* Section 3: Patient Information */}
-      <PatientInfoSection onChangesMade={onChangesMade} />
+        <TabsContent value="hiring">
+          <HiringSection
+            isHiring={isHiring}
+            onHiringChange={(value) => {
+              setIsHiring(value)
+              onChangesMade()
+            }}
+            onChangesMade={onChangesMade}
+          />
+        </TabsContent>
+
+        <TabsContent value="patient-services">
+          <PatientInfoSection onChangesMade={onChangesMade} />
+        </TabsContent>
+      </Tabs>
 
       {/* Floating Save Button */}
       {hasUnsavedChanges && (

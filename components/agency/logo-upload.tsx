@@ -52,7 +52,7 @@ export function LogoUpload({ currentLogo, onLogoChange }: LogoUploadProps) {
           variant="outline"
           size="sm"
           onClick={() => inputRef.current?.click()}
-          className="gap-2"
+          className="gap-2 bg-card"
         >
           <Upload className="h-4 w-4" />
           Upload Logo

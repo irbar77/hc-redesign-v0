@@ -281,6 +281,7 @@ export function BasicInfoSection({ onChangesMade }: BasicInfoSectionProps) {
             isVerified={emailVerified}
             onVerify={() => setEmailVerified(true)}
             placeholder="email@example.com"
+            disabled={true}
           />
         </div>
 

@@ -83,7 +83,7 @@ const getStatusColor = (status: string) => {
   switch (status) {
     case 'active': return 'bg-green-100 text-green-700 border-green-200 dark:bg-green-900/30 dark:text-green-400'
     case 'paused': return 'bg-yellow-100 text-yellow-700 border-yellow-200 dark:bg-yellow-900/30 dark:text-yellow-400'
-    case 'closed': return 'bg-gray-100 text-gray-600 border-gray-200 dark:bg-gray-800/50 dark:text-gray-400'
+    case 'closed': return 'bg-destructive/10 text-destructive border-destructive/20 dark:bg-destructive/20 dark:text-destructive'
     case 'draft': return 'bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-400'
     default: return 'bg-gray-100 text-gray-600 border-gray-200'
   }
@@ -198,11 +198,11 @@ export default function AgencyJobsPage() {
             placeholder="Search jobs..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9"
+            className="pl-9 bg-card"
           />
         </div>
         <Select value={statusFilter} onValueChange={setStatusFilter}>
-          <SelectTrigger className="w-[130px]">
+          <SelectTrigger className="w-[130px] bg-card">
             <SelectValue placeholder="Status" />
           </SelectTrigger>
           <SelectContent>
@@ -214,7 +214,7 @@ export default function AgencyJobsPage() {
           </SelectContent>
         </Select>
         <Select value={roleFilter} onValueChange={setRoleFilter}>
-          <SelectTrigger className="w-[110px]">
+          <SelectTrigger className="w-[110px] bg-card">
             <SelectValue placeholder="Role" />
           </SelectTrigger>
           <SelectContent>
@@ -318,7 +318,7 @@ export default function AgencyJobsPage() {
                       </div>
                     </div>
                     {job.status !== 'draft' && (
-                      <Button variant="outline" size="sm" className="gap-1.5 mt-auto">
+                      <Button variant="outline" size="sm" className="gap-1.5 mt-auto bg-card">
                         <Users className="h-3.5 w-3.5" />View Applicants
                       </Button>
                     )}

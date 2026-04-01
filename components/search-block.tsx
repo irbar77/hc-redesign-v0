@@ -33,26 +33,26 @@ export function SearchBlock({ onSearch, initialTab = 'agencies', compact = false
   }
 
   return (
-    <div className={`w-full ${compact ? '' : 'max-w-2xl mx-auto'}`}>
+    <div className={`w-full ${compact ? '' : 'max-w-3xl mx-auto'}`}>
       <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
         <TabsList className={`w-full grid grid-cols-3 ${compact ? 'h-10' : 'h-12'} bg-muted/50`}>
           <TabsTrigger
             value="agencies"
-            className="flex items-center gap-2 data-[state=active]:bg-card data-[state=active]:text-foreground"
+            className="flex items-center gap-2 data-[state=active]:bg-card data-[state=active]:text-foreground hover:bg-card/60 hover:text-foreground transition-all"
           >
             <Building2 className="h-4 w-4" />
             <span className="hidden sm:inline">Agencies</span>
           </TabsTrigger>
           <TabsTrigger
             value="caregivers"
-            className="flex items-center gap-2 data-[state=active]:bg-card data-[state=active]:text-foreground"
+            className="flex items-center gap-2 data-[state=active]:bg-card data-[state=active]:text-foreground hover:bg-card/60 hover:text-foreground transition-all"
           >
             <Users className="h-4 w-4" />
             <span className="hidden sm:inline">Caregivers</span>
           </TabsTrigger>
           <TabsTrigger
             value="jobs"
-            className="flex items-center gap-2 data-[state=active]:bg-card data-[state=active]:text-foreground"
+            className="flex items-center gap-2 data-[state=active]:bg-card data-[state=active]:text-foreground hover:bg-card/60 hover:text-foreground transition-all"
           >
             <ClipboardList className="h-4 w-4" />
             <span className="hidden sm:inline">Cases</span>

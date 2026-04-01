@@ -85,9 +85,9 @@ export default function Home() {
               <SearchBlock onSearch={handleSearch} initialTab={activeTab} />
               
               {/* Quick stats */}
-              <div className="mt-6 pt-6 border-t border-border flex flex-wrap justify-center gap-8">
+              <div className="mt-6 pt-6 border-t border-border max-w-3xl mx-auto flex flex-wrap justify-center gap-x-12 gap-y-4">
                 {stats.map((stat) => (
-                  <div key={stat.label} className="flex items-center gap-2 text-muted-foreground">
+                  <div key={stat.label} className="flex items-center gap-2 text-muted-foreground whitespace-nowrap">
                     {stat.icon}
                     <span className="font-semibold text-foreground">{stat.value}</span>
                     <span className="text-sm">{stat.label}</span>

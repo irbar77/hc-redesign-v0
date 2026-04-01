@@ -120,12 +120,12 @@ export default function NotificationsPage() {
           { label: 'Notifications' },
         ]}
       >
-        <Button variant="outline" size="sm" onClick={markAllAsRead} disabled={unreadCount === 0} className="gap-1.5">
+        <Button variant="outline" size="sm" onClick={markAllAsRead} disabled={unreadCount === 0} className="gap-1.5 bg-card">
           <CheckCheck className="h-4 w-4" />Mark all as read
         </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm" className="gap-1.5"><Settings className="h-4 w-4" /><span className="hidden sm:inline">Settings</span></Button>
+            <Button variant="outline" size="sm" className="gap-1.5 bg-card"><Settings className="h-4 w-4" /><span className="hidden sm:inline">Settings</span></Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem><Bell className="h-4 w-4 mr-2" />Notification Preferences</DropdownMenuItem>
@@ -138,11 +138,39 @@ export default function NotificationsPage() {
 
       {/* Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
-        <TabsList className="w-full sm:w-auto grid grid-cols-4 sm:inline-flex">
-          <TabsTrigger value="all" className="gap-1.5">All<Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs">{notificationsList.length}</Badge></TabsTrigger>
-          <TabsTrigger value="unread" className="gap-1.5">Unread{unreadCount > 0 && <Badge className="ml-1 h-5 px-1.5 text-xs bg-primary">{unreadCount}</Badge>}</TabsTrigger>
-          <TabsTrigger value="application">Applications</TabsTrigger>
-          <TabsTrigger value="message">Messages</TabsTrigger>
+        <TabsList className="w-full sm:w-auto grid grid-cols-4 sm:inline-flex bg-muted rounded-lg p-1">
+          <TabsTrigger 
+            value="all" 
+            className="gap-1.5 transition-colors hover:bg-accent hover:text-accent-foreground data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+          >
+            All
+            <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs bg-muted-foreground/10 text-muted-foreground">
+              {notificationsList.length}
+            </Badge>
+          </TabsTrigger>
+          <TabsTrigger 
+            value="unread" 
+            className="gap-1.5 transition-colors hover:bg-accent hover:text-accent-foreground data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+          >
+            Unread
+            {unreadCount > 0 && (
+              <Badge className="ml-1 h-5 px-1.5 text-xs bg-primary text-primary-foreground">
+                {unreadCount}
+              </Badge>
+            )}
+          </TabsTrigger>
+          <TabsTrigger 
+            value="application"
+            className="transition-colors hover:bg-accent hover:text-accent-foreground data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+          >
+            Applications
+          </TabsTrigger>
+          <TabsTrigger 
+            value="message"
+            className="transition-colors hover:bg-accent hover:text-accent-foreground data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+          >
+            Messages
+          </TabsTrigger>
         </TabsList>
       </Tabs>
 
@@ -160,11 +188,10 @@ export default function NotificationsPage() {
           filteredNotifications.map((notification) => (
             <div
               key={notification.id}
-              className={`group relative flex items-start gap-4 p-4 rounded-lg border transition-colors hover:bg-accent/50 ${
-                !notification.read ? 'bg-accent/30 border-primary/20' : 'bg-card border-border'
+              className={`group relative flex items-start gap-4 p-4 rounded-lg border transition-all hover:bg-muted ${
+                !notification.read ? 'bg-muted/40 border-border shadow-sm' : 'bg-card border-border'
               }`}
             >
-              {!notification.read && <div className="absolute left-1.5 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-primary" />}
               <div className="shrink-0">
                 {notification.avatar ? (
                   <Avatar className="h-10 w-10"><AvatarImage src={notification.avatar} /><AvatarFallback>{notification.avatarFallback}</AvatarFallback></Avatar>

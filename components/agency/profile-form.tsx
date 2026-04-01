@@ -32,16 +32,25 @@ export function AgencyProfileForm({
   return (
     <div className="pb-24">
       <Tabs defaultValue={defaultTab} className="space-y-6">
-        <TabsList className="grid w-full grid-cols-3 lg:w-auto lg:inline-flex">
-          <TabsTrigger value="basic-info" className="gap-2">
+        <TabsList className="w-full sm:w-auto grid grid-cols-3 lg:inline-flex bg-muted rounded-lg p-1">
+          <TabsTrigger 
+            value="basic-info" 
+            className="gap-2 transition-colors hover:bg-accent hover:text-accent-foreground data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+          >
             <Building2 className="h-4 w-4 hidden sm:inline" />
             Basic Info
           </TabsTrigger>
-          <TabsTrigger value="hiring" className="gap-2">
+          <TabsTrigger 
+            value="hiring" 
+            className="gap-2 transition-colors hover:bg-accent hover:text-accent-foreground data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+          >
             <Briefcase className="h-4 w-4 hidden sm:inline" />
             Hiring
           </TabsTrigger>
-          <TabsTrigger value="patient-services" className="gap-2">
+          <TabsTrigger 
+            value="patient-services" 
+            className="gap-2 transition-colors hover:bg-accent hover:text-accent-foreground data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+          >
             <HeartPulse className="h-4 w-4 hidden sm:inline" />
             Patient Services
           </TabsTrigger>

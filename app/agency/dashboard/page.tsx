@@ -179,13 +179,13 @@ export default function AgencyDashboardPage() {
             Post a Job
           </Link>
         </Button>
-        <Button variant="outline" asChild className="gap-2">
+        <Button variant="outline" asChild className="gap-2 bg-card">
           <Link href="/agency/dashboard/my-team">
             <UserPlus className="h-4 w-4" />
             Invite Team Member
           </Link>
         </Button>
-        <Button variant="outline" asChild className="gap-2">
+        <Button variant="outline" asChild className="gap-2 bg-card">
           <Link href="/agency/dashboard/profile">
             <Edit className="h-4 w-4" />
             Edit Profile
@@ -288,7 +288,7 @@ export default function AgencyDashboardPage() {
                 </div>
               </div>
 
-              <Button variant="outline" size="sm" asChild className="w-full mt-2">
+              <Button variant="outline" size="sm" asChild className="w-full mt-2 bg-card">
                 <Link href="/agency/dashboard/profile">
                   <Edit className="h-3.5 w-3.5 mr-2" />
                   Complete Profile

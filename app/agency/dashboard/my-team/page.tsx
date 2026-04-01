@@ -198,18 +198,29 @@ export default function MyTeamPage() {
         <CardContent className="space-y-4">
           <div className="flex gap-2">
             <div className="flex-1 relative">
-              <Input value={inviteLink} readOnly className="pr-20 bg-muted/50 font-mono text-sm" />
+              <Input value={inviteLink} readOnly className="pr-20 bg-card font-mono text-sm shadow-sm" />
             </div>
-            <Button onClick={handleCopyLink} variant="outline" className="gap-2">
-              {copied ? (<><Check className="h-4 w-4 text-emerald-500" />Copied!</>) : (<><Copy className="h-4 w-4" />Copy Link</>)}
+            <Button onClick={handleCopyLink} variant="outline" className="gap-2 bg-card">
+              {copied ? (
+                <>
+                  <Check className="h-4 w-4 text-emerald-500" />
+                  Copied!
+                </>
+              ) : (
+                <>
+                  <Copy className="h-4 w-4" />
+                  Copy Link
+                </>
+              )}
             </Button>
           </div>
           <Separator />
           <div className="flex flex-col sm:flex-row gap-3">
             <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
               <DialogTrigger asChild>
-                <Button variant="outline" className="gap-2 flex-1">
-                  <Upload className="h-4 w-4" />Upload Spreadsheet
+                <Button variant="outline" className="gap-2 flex-1 bg-card">
+                  <Upload className="h-4 w-4" />
+                  Upload Spreadsheet
                 </Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-lg">
@@ -218,9 +229,21 @@ export default function MyTeamPage() {
                   <DialogDescription>Choose how you want to add members to your team.</DialogDescription>
                 </DialogHeader>
                 <Tabs value={addMethod} onValueChange={(v) => setAddMethod(v as 'manual' | 'file')}>
-                  <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="manual" className="gap-2"><UserPlus className="h-4 w-4" />Manual Entry</TabsTrigger>
-                    <TabsTrigger value="file" className="gap-2"><FileSpreadsheet className="h-4 w-4" />Upload File</TabsTrigger>
+                  <TabsList className="w-full grid grid-cols-2 bg-muted rounded-lg p-1">
+                    <TabsTrigger 
+                      value="manual" 
+                      className="gap-2 transition-colors hover:bg-accent hover:text-accent-foreground data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+                    >
+                      <UserPlus className="h-4 w-4" />
+                      Manual Entry
+                    </TabsTrigger>
+                    <TabsTrigger 
+                      value="file" 
+                      className="gap-2 transition-colors hover:bg-accent hover:text-accent-foreground data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+                    >
+                      <FileSpreadsheet className="h-4 w-4" />
+                      Upload File
+                    </TabsTrigger>
                   </TabsList>
                   <TabsContent value="manual" className="space-y-4 mt-4">
                     <div className="grid gap-4">
@@ -253,8 +276,13 @@ export default function MyTeamPage() {
                 </DialogFooter>
               </DialogContent>
             </Dialog>
-            <Button variant="outline" className="gap-2 flex-1" onClick={() => { setAddMethod('manual'); setIsAddDialogOpen(true) }}>
-              <Plus className="h-4 w-4" />Add Manually
+            <Button 
+              variant="outline" 
+              className="gap-2 flex-1 bg-card" 
+              onClick={() => { setAddMethod('manual'); setIsAddDialogOpen(true) }}
+            >
+              <Plus className="h-4 w-4" />
+              Add Manually
             </Button>
           </div>
         </CardContent>
@@ -269,11 +297,46 @@ export default function MyTeamPage() {
           <div className="flex flex-wrap gap-2">
             <div className="relative flex-1 sm:flex-none">
               <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input type="search" placeholder="Search members..." className="pl-9 w-full sm:w-48" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+              <Input 
+                type="search" 
+                placeholder="Search members..." 
+                className="pl-9 w-full sm:w-48 bg-card" 
+                value={searchQuery} 
+                onChange={(e) => setSearchQuery(e.target.value)} 
+              />
             </div>
-            <Select value={roleFilter} onValueChange={setRoleFilter}><SelectTrigger className="w-[100px]"><SelectValue placeholder="Role" /></SelectTrigger><SelectContent><SelectItem value="all">All Roles</SelectItem><SelectItem value="HHA">HHA</SelectItem><SelectItem value="PCA">PCA</SelectItem><SelectItem value="CNA">CNA</SelectItem></SelectContent></Select>
-            <Select value={statusFilter} onValueChange={setStatusFilter}><SelectTrigger className="w-[110px]"><SelectValue placeholder="Status" /></SelectTrigger><SelectContent><SelectItem value="all">All Status</SelectItem><SelectItem value="active">Active</SelectItem><SelectItem value="inactive">Inactive</SelectItem><SelectItem value="pending">Pending</SelectItem></SelectContent></Select>
-            <Select value={sortBy} onValueChange={setSortBy}><SelectTrigger className="w-[130px]"><SelectValue placeholder="Sort by" /></SelectTrigger><SelectContent><SelectItem value="recent">Recently Joined</SelectItem><SelectItem value="name">Name A-Z</SelectItem><SelectItem value="cases">Most Cases</SelectItem></SelectContent></Select>
+            <Select value={roleFilter} onValueChange={setRoleFilter}>
+              <SelectTrigger className="w-[100px] bg-card">
+                <SelectValue placeholder="Role" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Roles</SelectItem>
+                <SelectItem value="HHA">HHA</SelectItem>
+                <SelectItem value="PCA">PCA</SelectItem>
+                <SelectItem value="CNA">CNA</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select value={statusFilter} onValueChange={setStatusFilter}>
+              <SelectTrigger className="w-[110px] bg-card">
+                <SelectValue placeholder="Status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Status</SelectItem>
+                <SelectItem value="active">Active</SelectItem>
+                <SelectItem value="inactive">Inactive</SelectItem>
+                <SelectItem value="pending">Pending</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select value={sortBy} onValueChange={setSortBy}>
+              <SelectTrigger className="w-[130px] bg-card">
+                <SelectValue placeholder="Sort by" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="recent">Recently Joined</SelectItem>
+                <SelectItem value="name">Name A-Z</SelectItem>
+                <SelectItem value="cases">Most Cases</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </div>
 
@@ -343,7 +406,10 @@ export default function MyTeamPage() {
                       ? 'Try adjusting your filters or search query'
                       : 'Start by inviting caregivers to join your team'}
                   </p>
-                  <Button onClick={handleCopyLink} variant="outline" className="gap-2"><Copy className="h-4 w-4" />Copy Invite Link</Button>
+                  <Button onClick={handleCopyLink} variant="outline" className="gap-2 bg-card">
+                    <Copy className="h-4 w-4" />
+                    Copy Invite Link
+                  </Button>
                 </div>
               )}
             </div>

@@ -191,11 +191,11 @@ export default function AgencyFavoritesPage() {
               placeholder="Search caregivers..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9"
+              className="pl-9 bg-card"
             />
           </div>
           <Select value={filterRole} onValueChange={setFilterRole}>
-            <SelectTrigger className="w-[130px]">
+            <SelectTrigger className="w-[130px] bg-card">
               <SelectValue placeholder="Role" />
             </SelectTrigger>
             <SelectContent>
@@ -208,7 +208,7 @@ export default function AgencyFavoritesPage() {
         </div>
         <div className="flex items-center gap-2">
           <Select value={sortBy} onValueChange={setSortBy}>
-            <SelectTrigger className="w-[150px]">
+            <SelectTrigger className="w-[150px] bg-card">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
             <SelectContent>
@@ -218,19 +218,27 @@ export default function AgencyFavoritesPage() {
               <SelectItem value="name">Name A-Z</SelectItem>
             </SelectContent>
           </Select>
-          <div className="flex items-center border rounded-md">
+          <div className="flex items-center gap-0.5 bg-muted rounded-lg p-1">
             <Button
-              variant={viewMode === 'grid' ? 'secondary' : 'ghost'}
+              variant="ghost"
               size="icon"
-              className="h-8 w-8 rounded-r-none"
+              className={`h-8 w-8 transition-colors hover:bg-accent hover:text-accent-foreground ${
+                viewMode === 'grid' 
+                  ? 'bg-card text-foreground shadow-sm' 
+                  : 'text-muted-foreground'
+              }`}
               onClick={() => setViewMode('grid')}
             >
               <Grid3X3 className="h-4 w-4" />
             </Button>
             <Button
-              variant={viewMode === 'list' ? 'secondary' : 'ghost'}
+              variant="ghost"
               size="icon"
-              className="h-8 w-8 rounded-l-none"
+              className={`h-8 w-8 transition-colors hover:bg-accent hover:text-accent-foreground ${
+                viewMode === 'list' 
+                  ? 'bg-card text-foreground shadow-sm' 
+                  : 'text-muted-foreground'
+              }`}
               onClick={() => setViewMode('list')}
             >
               <List className="h-4 w-4" />
@@ -300,10 +308,10 @@ export default function AgencyFavoritesPage() {
 
                 <div className="flex flex-wrap gap-1.5 mt-3">
                   {caregiver.skills.slice(0, 3).map((skill) => (
-                    <Badge key={skill} variant="outline" className="text-xs font-normal">{skill}</Badge>
+                    <Badge key={skill} variant="secondary" className="text-xs font-normal">{skill}</Badge>
                   ))}
                   {caregiver.skills.length > 3 && (
-                    <Badge variant="outline" className="text-xs font-normal">+{caregiver.skills.length - 3}</Badge>
+                    <Badge variant="secondary" className="text-xs font-normal">+{caregiver.skills.length - 3}</Badge>
                   )}
                 </div>
 
@@ -311,7 +319,7 @@ export default function AgencyFavoritesPage() {
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-semibold text-foreground">{caregiver.hourlyRate}/hr</span>
                   <div className="flex gap-2">
-                    <Button size="sm" variant="outline" className="h-8">
+                    <Button size="sm" variant="outline" className="h-8 bg-card">
                       <MessageCircle className="h-3.5 w-3.5 mr-1.5" />Message
                     </Button>
                     <Button size="sm" className="h-8">Invite</Button>
@@ -346,12 +354,12 @@ export default function AgencyFavoritesPage() {
                     </div>
                     <div className="flex flex-wrap gap-1.5 mt-2">
                       {caregiver.skills.map((skill) => (
-                        <Badge key={skill} variant="outline" className="text-xs font-normal">{skill}</Badge>
+                        <Badge key={skill} variant="secondary" className="text-xs font-normal">{skill}</Badge>
                       ))}
                     </div>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
-                    <Button size="sm" variant="outline"><MessageCircle className="h-4 w-4 mr-1.5" />Message</Button>
+                    <Button size="sm" variant="outline" className="bg-card"><MessageCircle className="h-4 w-4 mr-1.5" />Message</Button>
                     <Button size="sm">Invite</Button>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>

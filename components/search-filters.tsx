@@ -121,10 +121,10 @@ export function SearchFilters({
           <Button
             variant="ghost"
             size="sm"
-            className={`h-8 px-3 gap-1.5 transition-colors ${
+            className={`h-8 px-3 gap-1.5 transition-colors hover:bg-accent hover:text-accent-foreground ${
               viewMode === 'card' 
                 ? 'bg-card text-foreground shadow-sm' 
-                : 'text-muted-foreground hover:text-foreground'
+                : 'text-muted-foreground'
             }`}
             onClick={() => onViewModeChange('card')}
           >
@@ -134,10 +134,10 @@ export function SearchFilters({
           <Button
             variant="ghost"
             size="sm"
-            className={`h-8 px-3 gap-1.5 transition-colors ${
+            className={`h-8 px-3 gap-1.5 transition-colors hover:bg-accent hover:text-accent-foreground ${
               viewMode === 'list' 
                 ? 'bg-card text-foreground shadow-sm' 
-                : 'text-muted-foreground hover:text-foreground'
+                : 'text-muted-foreground'
             }`}
             onClick={() => onViewModeChange('list')}
           >
@@ -147,10 +147,10 @@ export function SearchFilters({
           <Button
             variant="ghost"
             size="sm"
-            className={`h-8 px-3 gap-1.5 transition-colors ${
+            className={`h-8 px-3 gap-1.5 transition-colors hover:bg-accent hover:text-accent-foreground ${
               viewMode === 'map' 
                 ? 'bg-card text-foreground shadow-sm' 
-                : 'text-muted-foreground hover:text-foreground'
+                : 'text-muted-foreground'
             }`}
             onClick={() => onViewModeChange('map')}
           >

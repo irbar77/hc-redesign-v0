@@ -75,11 +75,35 @@ export default function SettingsPage() {
       />
 
       <Tabs defaultValue="account" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:inline-flex">
-          <TabsTrigger value="account" className="gap-2"><User className="h-4 w-4 hidden sm:inline" />Account</TabsTrigger>
-          <TabsTrigger value="notifications" className="gap-2"><Bell className="h-4 w-4 hidden sm:inline" />Notifications</TabsTrigger>
-          <TabsTrigger value="billing" className="gap-2"><CreditCard className="h-4 w-4 hidden sm:inline" />Billing</TabsTrigger>
-          <TabsTrigger value="security" className="gap-2"><Shield className="h-4 w-4 hidden sm:inline" />Security</TabsTrigger>
+        <TabsList className="w-full sm:w-auto grid grid-cols-4 lg:inline-flex bg-muted rounded-lg p-1">
+          <TabsTrigger 
+            value="account" 
+            className="gap-2 transition-colors hover:bg-accent hover:text-accent-foreground data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+          >
+            <User className="h-4 w-4 hidden sm:inline" />
+            Account
+          </TabsTrigger>
+          <TabsTrigger 
+            value="notifications" 
+            className="gap-2 transition-colors hover:bg-accent hover:text-accent-foreground data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+          >
+            <Bell className="h-4 w-4 hidden sm:inline" />
+            Notifications
+          </TabsTrigger>
+          <TabsTrigger 
+            value="billing" 
+            className="gap-2 transition-colors hover:bg-accent hover:text-accent-foreground data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+          >
+            <CreditCard className="h-4 w-4 hidden sm:inline" />
+            Billing
+          </TabsTrigger>
+          <TabsTrigger 
+            value="security" 
+            className="gap-2 transition-colors hover:bg-accent hover:text-accent-foreground data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+          >
+            <Shield className="h-4 w-4 hidden sm:inline" />
+            Security
+          </TabsTrigger>
         </TabsList>
 
         {/* Account Tab */}
@@ -94,7 +118,13 @@ export default function SettingsPage() {
                 <div className="flex-1">
                   <Label htmlFor="email">Email</Label>
                   <div className="flex gap-2 mt-1.5">
-                    <Input id="email" type="email" defaultValue="contact@sunrisehomecare.com" className="flex-1" />
+                    <Input 
+                      id="email" 
+                      type="email" 
+                      defaultValue="contact@sunrisehomecare.com" 
+                      className="flex-1 bg-card disabled:opacity-70 disabled:cursor-not-allowed" 
+                      disabled 
+                    />
                     <Badge variant="outline" className="h-9 px-3 bg-primary/10 text-primary border-primary/20"><Check className="h-3 w-3 mr-1" />Verified</Badge>
                   </div>
                 </div>
@@ -112,7 +142,7 @@ export default function SettingsPage() {
               <div className="space-y-2">
                 <Label htmlFor="current-password">Current Password</Label>
                 <div className="relative">
-                  <Input id="current-password" type={showCurrentPassword ? 'text' : 'password'} placeholder="Enter current password" />
+                  <Input id="current-password" type={showCurrentPassword ? 'text' : 'password'} placeholder="Enter current password" className="bg-card" />
                   <Button type="button" variant="ghost" size="icon" className="absolute right-0 top-0 h-full px-3" onClick={() => setShowCurrentPassword(!showCurrentPassword)}>
                     {showCurrentPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </Button>
@@ -121,7 +151,7 @@ export default function SettingsPage() {
               <div className="space-y-2">
                 <Label htmlFor="new-password">New Password</Label>
                 <div className="relative">
-                  <Input id="new-password" type={showNewPassword ? 'text' : 'password'} placeholder="Enter new password" />
+                  <Input id="new-password" type={showNewPassword ? 'text' : 'password'} placeholder="Enter new password" className="bg-card" />
                   <Button type="button" variant="ghost" size="icon" className="absolute right-0 top-0 h-full px-3" onClick={() => setShowNewPassword(!showNewPassword)}>
                     {showNewPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </Button>
@@ -129,7 +159,7 @@ export default function SettingsPage() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="confirm-password">Confirm New Password</Label>
-                <Input id="confirm-password" type="password" placeholder="Confirm new password" />
+                <Input id="confirm-password" type="password" placeholder="Confirm new password" className="bg-card" />
               </div>
               <Button>Update Password</Button>
             </CardContent>
@@ -144,11 +174,31 @@ export default function SettingsPage() {
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label>Language</Label>
-                  <Select defaultValue="en"><SelectTrigger><SelectValue placeholder="Select language" /></SelectTrigger><SelectContent><SelectItem value="en">English</SelectItem><SelectItem value="es">Spanish</SelectItem><SelectItem value="zh">Chinese</SelectItem><SelectItem value="ru">Russian</SelectItem></SelectContent></Select>
+                  <Select defaultValue="en">
+                    <SelectTrigger className="bg-card">
+                      <SelectValue placeholder="Select language" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="en">English</SelectItem>
+                      <SelectItem value="es">Spanish</SelectItem>
+                      <SelectItem value="zh">Chinese</SelectItem>
+                      <SelectItem value="ru">Russian</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
                 <div className="space-y-2">
                   <Label>Timezone</Label>
-                  <Select defaultValue="est"><SelectTrigger><SelectValue placeholder="Select timezone" /></SelectTrigger><SelectContent><SelectItem value="est">Eastern Time (ET)</SelectItem><SelectItem value="cst">Central Time (CT)</SelectItem><SelectItem value="mst">Mountain Time (MT)</SelectItem><SelectItem value="pst">Pacific Time (PT)</SelectItem></SelectContent></Select>
+                  <Select defaultValue="est">
+                    <SelectTrigger className="bg-card">
+                      <SelectValue placeholder="Select timezone" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="est">Eastern Time (ET)</SelectItem>
+                      <SelectItem value="cst">Central Time (CT)</SelectItem>
+                      <SelectItem value="mst">Mountain Time (MT)</SelectItem>
+                      <SelectItem value="pst">Pacific Time (PT)</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
               <Button>Save Preferences</Button>
@@ -205,7 +255,10 @@ export default function SettingsPage() {
               </div>
               <div className="flex items-center justify-between pt-2">
                 <div><p className="text-sm text-muted-foreground">Next billing date</p><p className="font-medium">April 15, 2026</p></div>
-                <div className="flex gap-2"><Button variant="outline">Change Plan</Button><Button>Buy Credits</Button></div>
+                <div className="flex gap-2">
+                  <Button variant="outline" className="bg-card">Change Plan</Button>
+                  <Button className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm">Buy Credits</Button>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -220,7 +273,10 @@ export default function SettingsPage() {
                 </div>
                 <div className="flex items-center gap-2"><Badge variant="outline">Default</Badge><Button variant="ghost" size="sm">Edit</Button></div>
               </div>
-              <Button variant="outline" className="w-full"><CreditCard className="h-4 w-4 mr-2" />Add Payment Method</Button>
+              <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm">
+                <CreditCard className="h-4 w-4 mr-2" />
+                Add Payment Method
+              </Button>
             </CardContent>
           </Card>
 
@@ -259,7 +315,10 @@ export default function SettingsPage() {
               {twoFactorEnabled && (
                 <div className="p-4 bg-muted/50 rounded-lg">
                   <p className="text-sm text-muted-foreground">Two-factor authentication is active. You will need to enter a code from your authenticator app when signing in.</p>
-                  <Button variant="outline" size="sm" className="mt-3"><Key className="h-4 w-4 mr-2" />View Recovery Codes</Button>
+                  <Button variant="outline" size="sm" className="mt-3 bg-card">
+                    <Key className="h-4 w-4 mr-2" />
+                    View Recovery Codes
+                  </Button>
                 </div>
               )}
             </CardContent>
@@ -284,7 +343,10 @@ export default function SettingsPage() {
                   {!session.current && <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive">Revoke</Button>}
                 </div>
               ))}
-              <Button variant="outline" className="w-full text-destructive hover:text-destructive"><LogOut className="h-4 w-4 mr-2" />Sign Out All Other Sessions</Button>
+              <Button variant="outline" className="w-full text-destructive hover:bg-destructive/5 bg-card">
+                <LogOut className="h-4 w-4 mr-2" />
+                Sign Out All Other Sessions
+              </Button>
             </CardContent>
           </Card>
 

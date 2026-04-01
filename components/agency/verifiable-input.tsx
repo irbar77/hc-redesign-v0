@@ -15,6 +15,7 @@ interface VerifiableInputProps {
   isVerified: boolean
   onVerify: () => void
   placeholder?: string
+  disabled?: boolean
 }
 
 export function VerifiableInput({
@@ -26,6 +27,7 @@ export function VerifiableInput({
   isVerified,
   onVerify,
   placeholder,
+  disabled,
 }: VerifiableInputProps) {
   return (
     <div className="space-y-2">
@@ -38,8 +40,9 @@ export function VerifiableInput({
             value={value}
             onChange={(e) => onChange(e.target.value)}
             placeholder={placeholder}
+            disabled={disabled}
             className={cn(
-              'pr-10',
+              'pr-10 bg-card disabled:opacity-70 disabled:cursor-not-allowed',
               isVerified
                 ? 'border-green-500/50 focus-visible:border-green-500 focus-visible:ring-green-500/20'
                 : 'border-amber-500/50 focus-visible:border-amber-500 focus-visible:ring-amber-500/20'
@@ -58,9 +61,10 @@ export function VerifiableInput({
           variant={isVerified ? 'secondary' : 'outline'}
           size="default"
           onClick={onVerify}
-          disabled={isVerified}
+          disabled={disabled || isVerified}
           className={cn(
             'shrink-0',
+            !isVerified && 'bg-card',
             isVerified && 'text-green-600 bg-green-500/10 border-green-500/20'
           )}
         >

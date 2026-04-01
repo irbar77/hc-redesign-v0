@@ -90,7 +90,7 @@ export default function AgencyMessagesPage() {
               placeholder="Search conversations..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9 h-9 bg-muted/50"
+              className="pl-9 h-9 bg-card"
             />
           </div>
         </div>
@@ -102,10 +102,15 @@ export default function AgencyMessagesPage() {
               <button
                 key={conv.id}
                 onClick={() => handleSelectConversation(conv.id)}
-                className={`w-full flex items-start gap-3 p-3 hover:bg-muted/50 transition-colors text-left ${
-                  selectedConversation === conv.id ? 'bg-muted' : ''
+                className={`w-full flex items-start gap-3 px-4 py-3 hover:bg-card/60 transition-all text-left relative overflow-hidden ${
+                  selectedConversation === conv.id ? 'bg-card shadow-[0_1px_3px_rgba(0,0,0,0.05)] z-10' : ''
                 }`}
               >
+                {/* Акцентная полоска слева для выбранного чата */}
+                {selectedConversation === conv.id && (
+                  <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-primary" />
+                )}
+                
                 <div className="relative shrink-0">
                   <Avatar className="h-10 w-10">
                     <AvatarImage src={conv.avatar || ''} alt={conv.name} />
@@ -117,13 +122,15 @@ export default function AgencyMessagesPage() {
                     <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-emerald-500 border-2 border-background" />
                   )}
                 </div>
+
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between gap-2">
                     <span className="font-medium text-sm text-foreground truncate">{conv.name}</span>
                     <span className="text-[11px] text-muted-foreground shrink-0">{conv.timestamp}</span>
                   </div>
                   <p className="text-xs text-muted-foreground truncate">{conv.role}</p>
-                  <p className="text-sm text-muted-foreground truncate mt-0.5">{conv.lastMessage}</p>
+                  {/* line-clamp-1 работает жестко от контейнера, игнорируя баги flex-box у truncate */}
+                  <p className="text-sm text-muted-foreground line-clamp-1 mt-0.5">{conv.lastMessage}</p>
                 </div>
                 {conv.unread > 0 && (
                   <Badge variant="default" className="h-5 min-w-5 px-1.5 text-[10px] shrink-0">
@@ -137,7 +144,7 @@ export default function AgencyMessagesPage() {
       </div>
 
       {/* Chat Area */}
-      <div className={`flex-1 flex flex-col ${showMobileChat ? 'flex' : 'hidden md:flex'}`}>
+      <div className={`flex-1 flex flex-col bg-card ${showMobileChat ? 'flex' : 'hidden md:flex'}`}>
         {selectedChat ? (
           <>
             {/* Chat Header */}
@@ -196,11 +203,22 @@ export default function AgencyMessagesPage() {
             <ScrollArea className="flex-1 p-4">
               <div className="space-y-4 max-w-2xl mx-auto">
                 {mockMessages.map((message) => (
-                  <div key={message.id} className={`flex ${message.senderId === 'me' ? 'justify-end' : 'justify-start'}`}>
+                  <div key={message.id} className={`flex items-end gap-2 ${message.senderId === 'me' ? 'justify-end' : 'justify-start'}`}>
+                    
+                    {/* Собеседник: Аватарка (слева) */}
+                    {message.senderId === 'them' && (
+                      <Avatar className="h-8 w-8 shrink-0">
+                        <AvatarImage src={selectedChat.avatar || ''} />
+                        <AvatarFallback className="bg-primary/10 text-primary text-xs">
+                          {selectedChat.name.split(' ').map(n => n[0]).join('')}
+                        </AvatarFallback>
+                      </Avatar>
+                    )}
+
                     <div className={`max-w-[75%] rounded-2xl px-4 py-2 ${
                       message.senderId === 'me'
-                        ? 'bg-primary text-primary-foreground rounded-br-md'
-                        : 'bg-muted text-foreground rounded-bl-md'
+                        ? 'bg-primary text-primary-foreground rounded-br-sm'
+                        : 'bg-muted text-foreground rounded-bl-sm'
                     }`}>
                       <p className="text-sm">{message.text}</p>
                       <div className={`flex items-center gap-1 mt-1 ${message.senderId === 'me' ? 'justify-end' : 'justify-start'}`}>
